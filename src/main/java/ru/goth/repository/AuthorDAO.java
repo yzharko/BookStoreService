@@ -6,7 +6,6 @@ import ru.goth.entity.Author;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class AuthorDAO {
     public Author getAuthor(long id) {
