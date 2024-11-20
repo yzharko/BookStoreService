@@ -2,7 +2,9 @@ package ru.goth.controller.buybookservlets;
 
 import ru.goth.entity.Author;
 import ru.goth.entity.dto.BookDTO;
-import ru.goth.service.BookService;
+import ru.goth.entity.dto.BuyBookDTO;
+import ru.goth.entity.dto.BuyDTO;
+import ru.goth.service.BuyBookService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,8 +19,14 @@ public class PutBuyBook extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
-        long id = Long.parseLong(request.getParameter("book.id"));
+        long buyBookId = Long.parseLong(request.getParameter("buyBook.id"));
 
+        long buyId = Long.parseLong(request.getParameter("buy.id"));
+        BuyDTO buyDTO = new BuyDTO();
+        buyDTO.setDescription(request.getParameter("description"));
+        buyDTO.setClient(request.getParameter("client"));
+
+        long bookId = Long.parseLong(request.getParameter("book.id"));
         BookDTO bookDTO = new BookDTO();
         bookDTO.setTitle(request.getParameter("title"));
 
@@ -30,10 +38,13 @@ public class PutBuyBook extends HttpServlet {
         bookDTO.setPrice(
                 Float.parseFloat(request.getParameter("price")));
         bookDTO.setAmount(
-                Integer.parseInt(request.getParameter("amount")));
+                Integer.parseInt(request.getParameter("book.amount")));
 
-        BookService bookService = new BookService();
-        bookService.update(id, bookDTO);
+        BuyBookDTO buyBookDTO = new BuyBookDTO();
+        buyBookDTO.setAmount(Integer.parseInt(request.getParameter("buyBook.amount")));
+
+        BuyBookService buyBookService = new BuyBookService();
+        buyBookService.update(buyId, buyDTO, bookId, bookDTO, buyBookId, buyBookDTO);
 
         response.setStatus(HttpServletResponse.SC_OK);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");

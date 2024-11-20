@@ -1,9 +1,7 @@
 package ru.goth.repository;
 
 import ru.goth.config.DataBaseConfig;
-import ru.goth.entity.Author;
 import ru.goth.entity.Buy;
-import ru.goth.entity.dto.BuyDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
