@@ -71,4 +71,16 @@ public class BookDAO {
             e.getStackTrace();
         }
     }
+    public void deleteBook(String title) {
+        try (Connection connection = DataBaseConfig.getDataSource().getConnection();
+             PreparedStatement statement = connection.prepareStatement("\n" +
+                     "DELETE FROM public.book \n" +
+                     "WHERE title = (?)")) {
+
+            statement.setString(1, title);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+    }
 }

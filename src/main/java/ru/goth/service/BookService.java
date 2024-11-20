@@ -3,7 +3,6 @@ package ru.goth.service;
 import ru.goth.entity.Author;
 import ru.goth.entity.Book;
 import ru.goth.entity.dto.BookDTO;
-import ru.goth.repository.AuthorDAO;
 import ru.goth.repository.BookDAO;
 
 import java.util.logging.Logger;
@@ -47,4 +46,9 @@ public class BookService {
             bookDAO.updateBook(id, title, author, genre, price, amount);
         }
     }
+    public void deleteByDTO(BookDTO bookDTO) {
+        BookDAO bookDAO = new BookDAO();
+        bookDAO.deleteBook(bookDTO.getTitle());
+    }
+
 }
