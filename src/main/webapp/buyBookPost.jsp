@@ -4,7 +4,7 @@
     <title>POST Запрос</title>
 </head>
 <body>
-    <h1>Отправка POST-запроса для КНИГИ</h1>
+    <h1>Отправка POST-запроса для ЗАКАЗА</h1>
     <form action="setBuyBook" method="post">
         buy_description:<li><input type="text" name="description"></li>
         buy_client:<li><input type="text" name="client"></li>
