@@ -4,8 +4,8 @@
     <title>GET Запрос</title>
 </head>
 <body>
-    <h1>Отправка GET-запроса для АВТОРА</h1>
-    <form action="getAuthor" method="get">
+    <h1>Отправка GET-запроса для КНИГИ</h1>
+    <form action="getBook" method="get">
         <input type="text" name="id">
         <input type="submit" value="Отправить GET">
     </form>

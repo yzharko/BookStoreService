@@ -4,7 +4,7 @@
     <title>PUT Запрос</title>
 </head>
 <body>
-    <h1>Отправка PUT-запроса</h1>
+    <h1>Отправка PUT-запроса для АВТОРА</h1>
     <form action="updateAuthor" method="put">
         <input type="text" name="id">
         <input type="text" name="name">
