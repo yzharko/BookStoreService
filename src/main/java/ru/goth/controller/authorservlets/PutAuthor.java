@@ -11,18 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "getAuthor", value = "/getAuthor")
-public class GetAuthor extends HttpServlet {
+@WebServlet(name = "updateAuthor", value = "/updateAuthor")
+public class PutAuthor extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
         long id = Long.parseLong(request.getParameter("id"));
+        AuthorDTO authorDTO = new AuthorDTO();
+        authorDTO.setName(request.getParameter("name"));
 
         AuthorService authorService = new AuthorService();
-        AuthorDTO authorDTO = authorService.getById(id);
+        authorService.update(id, authorDTO);
 
-        request.setAttribute("author", authorDTO);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/authorGetRes.jsp");
+        response.setStatus(HttpServletResponse.SC_OK);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
 
         try {
             requestDispatcher.forward(request, response);
@@ -30,4 +32,5 @@ public class GetAuthor extends HttpServlet {
             e.printStackTrace();
         }
     }
+
 }
