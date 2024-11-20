@@ -12,7 +12,7 @@ public class Buy {
     private String description;
     @Column(name = "client")
     private String client;
-    @OneToMany(mappedBy = "buy_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "buy_id", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List <BuyBook> buyBooks;
 
     public long getId() {
@@ -37,5 +37,14 @@ public class Buy {
 
     public void setClient(String client) {
         this.client = client;
+    }
+
+    @Override
+    public String toString() {
+        return "Buy{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", client='" + client + '\'' +
+                '}';
     }
 }

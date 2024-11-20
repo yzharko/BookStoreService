@@ -19,7 +19,7 @@ public class Book {
     private float price;
     @Column(name = "amount")
     private int amount;
-    @OneToMany(mappedBy = "book_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "book_id", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List <BuyBook> buyBooks;
 
     public long getId() {
@@ -68,5 +68,18 @@ public class Book {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author=" + author.toString() +
+                ", genre='" + genre + '\'' +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", buyBooks=" + buyBooks +
+                '}';
     }
 }

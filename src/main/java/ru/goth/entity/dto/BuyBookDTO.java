@@ -4,18 +4,9 @@ import ru.goth.entity.Book;
 import ru.goth.entity.Buy;
 
 public class BuyBookDTO {
-    private long id;
     private Buy buy;
     private Book book;
     private int amount;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public Buy getBuy() {
         return buy;

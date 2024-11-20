@@ -10,7 +10,7 @@ public class Author {
     private long id;
     @Column(name = "name_author")
     private String name;
-    @OneToMany(mappedBy = "author_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author_id", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List <Book> books;
 
     public Author() {}
