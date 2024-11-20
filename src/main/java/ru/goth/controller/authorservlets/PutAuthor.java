@@ -32,5 +32,4 @@ public class PutAuthor extends HttpServlet {
             e.printStackTrace();
         }
     }
-
 }
