@@ -6,7 +6,7 @@
 <body>
     <h1>Отправка GET-запроса для КНИГИ</h1>
     <form action="getBook" method="get">
-        <input type="text" name="id">
+        book_id:<input type="text" name="id">
         <input type="submit" value="Отправить GET">
     </form>
 </body>

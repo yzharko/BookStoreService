@@ -6,7 +6,7 @@
 <body>
     <h1>Отправка DELETE-запроса для АВТОРА</h1>
     <form action="deleteAuthor" method="delete">
-        <input type="text" name="name">
+        name:<input type="text" name="name">
         <input type="submit" value="Отправить DELETE">
     </form>
 </body>

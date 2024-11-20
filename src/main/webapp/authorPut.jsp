@@ -6,8 +6,8 @@
 <body>
     <h1>Отправка PUT-запроса для АВТОРА</h1>
     <form action="updateAuthor" method="put">
-        <input type="text" name="id">
-        <input type="text" name="name">
+        id:<input type="text" name="id">
+        name:<input type="text" name="name">
         <input type="submit" value="Отправить PUT">
     </form>
 </body>

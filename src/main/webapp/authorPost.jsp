@@ -6,7 +6,7 @@
 <body>
     <h1>Отправка POST-запроса для АВТОРА</h1>
     <form action="setAuthor" method="post">
-        <input type="text" name="name">
+        name:<input type="text" name="name">
         <input type="submit" value="Отправить POST">
     </form>
 </body>
