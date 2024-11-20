@@ -28,7 +28,9 @@ public class AuthorDAO {
     }
     public void setAuthor(String name) {
         try (Connection connection = DataBaseConfig.getDataSource().getConnection();
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO public.author (name_author) VALUES (?)")) {
+             PreparedStatement statement = connection.prepareStatement("\n" +
+                     "INSERT INTO public.author \n" +
+                     "(name_author) VALUES (?)")) {
 
             statement.setString(1, name);
             statement.executeUpdate();
@@ -38,7 +40,10 @@ public class AuthorDAO {
     }
     public void updateAuthor(long id, String name) {
         try (Connection connection = DataBaseConfig.getDataSource().getConnection();
-             PreparedStatement statement = connection.prepareStatement("UPDATE public.author SET name_author = (?) WHERE author_id = ?")) {
+             PreparedStatement statement = connection.prepareStatement("\n" +
+                     "UPDATE public.author\n" +
+                     "SET name_author = (?)\n" +
+                     "WHERE author_id = ?")) {
 
             statement.setString(1, name);
             statement.setLong(2, id);
@@ -49,7 +54,9 @@ public class AuthorDAO {
     }
     public void deleteAuthor(String name) {
         try (Connection connection = DataBaseConfig.getDataSource().getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM public.author WHERE name_author = (?)")) {
+             PreparedStatement statement = connection.prepareStatement("\n" +
+                     "DELETE FROM public.author \n" +
+                     "WHERE name_author = (?)")) {
 
             statement.setString(1, name);
             statement.executeUpdate();
