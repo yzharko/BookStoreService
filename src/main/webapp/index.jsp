@@ -6,7 +6,7 @@
 <body>
     <h1>Goth Book Store</h1>
     <h3>We are selling only the occult</h3>
-    <h2>РАБОТА С АВТОРАМИ</h2>
+    <h2>Работа с Авторами</h2>
     <h3>Выберите метод</h3>
     <ul>
         <li><a href="authorGet.jsp">GET</a></li>
@@ -14,7 +14,7 @@
         <li><a href="authorPut.jsp">PUT</a></li>
         <li><a href="authorDelete.jsp">DELETE</a></li>
     </ul>
-     <h2>РАБОТА С КНИГАМИ</h2>
+     <h2>Работа с Книгами</h2>
      <h3>Выберите метод</h3>
      <ul>
         <li><a href="bookGet.jsp">GET</a></li>
@@ -22,7 +22,7 @@
         <li><a href="bookPut.jsp">PUT</a></li>
         <li><a href="bookDelete.jsp">DELETE</a></li>
      </ul>
-     <h2>РАБОТА С ЗАКАЗАМИ</h2>
+     <h2>Работа с Заказами</h2>
      <h3>Выберите метод</h3>
      <ul>
         <li><a href="buyBookGet.jsp">GET</a></li>
