@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "getAuthor", value = "/getAuthor")
-public class AuthorServlet extends HttpServlet {
+public class getAuthor extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
-        long id = Long.parseLong(request.getParameter("author_id"));
+        long id = Long.parseLong(request.getParameter("id"));
 
         AuthorService authorService = new AuthorService();
         AuthorDTO authorDTO = authorService.getById(id);
