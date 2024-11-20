@@ -40,8 +40,26 @@ public class BuyBookDAO {
 
             return buyBook;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.getStackTrace();
             return null;
+        }
+    }
+
+    public void setBuyBook(int buyId, int bookId, int amount) {
+        try (Connection connection = DataBaseConfig.getDataSource().getConnection();
+             PreparedStatement statement = connection.prepareStatement("\n" +
+                     "INSERT INTO public.buy_book\n" +
+                     "(buy_id, book_id, amount)\n" +
+                     "VALUES (?, ?, ?)")) {
+
+            statement.setInt(1, buyId);
+            statement.setInt(2, bookId);
+            statement.setInt(3, amount);
+            statement.executeUpdate();
+
+        } catch (Exception e) {
+            e.getStackTrace();
         }
     }
 }

@@ -7,6 +7,7 @@ import ru.goth.entity.Book;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class BookDAO {
     public Book getBook(long id) {
@@ -36,12 +37,13 @@ public class BookDAO {
             return null;
         }
     }
-    public void setBook(String title, Author author, String genre, float price, int amount) {
+    public int setBook(String title, Author author, String genre, float price, int amount) {
         try (Connection connection = DataBaseConfig.getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement("\n" +
                      "INSERT INTO public.book\n" +
                      "(title, author_id, genre, price, amount)\n" +
-                     "VALUES (?, ?, ?, ?, ?)")) {
+                     "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+
 
             statement.setString(1, title);
             statement.setLong(2, author.getId());
@@ -49,8 +51,18 @@ public class BookDAO {
             statement.setFloat(4, price);
             statement.setInt(5, amount);
             statement.executeUpdate();
+
+            ResultSet resultSet = statement.getGeneratedKeys();
+            int generatedId = 0;
+            if(resultSet.next())
+            {
+                generatedId = resultSet.getInt(1);
+            }
+            return generatedId;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.getStackTrace();
+            return 0;
         }
     }
     public void updateBook(long id, String title, Author author, String genre, float price, int amount) {
@@ -68,6 +80,7 @@ public class BookDAO {
             statement.setLong(6, id);
             statement.executeUpdate();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.getStackTrace();
         }
     }
@@ -80,6 +93,7 @@ public class BookDAO {
             statement.setString(1, title);
             statement.executeUpdate();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.getStackTrace();
         }
     }

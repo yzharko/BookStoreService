@@ -22,6 +22,7 @@ public class AuthorDAO {
             }
             return author;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.getStackTrace();
             return null;
         }
@@ -35,6 +36,7 @@ public class AuthorDAO {
             statement.setString(1, name);
             statement.executeUpdate();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.getStackTrace();
         }
     }
@@ -49,6 +51,7 @@ public class AuthorDAO {
             statement.setLong(2, id);
             statement.executeUpdate();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.getStackTrace();
         }
     }
@@ -61,6 +64,7 @@ public class AuthorDAO {
             statement.setString(1, name);
             statement.executeUpdate();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.getStackTrace();
         }
     }
