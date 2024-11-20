@@ -3,6 +3,7 @@ package ru.goth.repository;
 import ru.goth.config.DataBaseConfig;
 import ru.goth.entity.Author;
 import ru.goth.entity.Buy;
+import ru.goth.entity.dto.BuyDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -53,30 +54,19 @@ public class BuyDAO {
             return 0;
         }
     }
-//    public void updateAuthor(long id, String name) {
-//        try (Connection connection = DataBaseConfig.getDataSource().getConnection();
-//             PreparedStatement statement = connection.prepareStatement("\n" +
-//                     "UPDATE public.author\n" +
-//                     "SET name_author = (?)\n" +
-//                     "WHERE author_id = ?")) {
-//
-//            statement.setString(1, name);
-//            statement.setLong(2, id);
-//            statement.executeUpdate();
-//        } catch (Exception e) {
-//            e.getStackTrace();
-//        }
-//    }
-//    public void deleteAuthor(String name) {
-//        try (Connection connection = DataBaseConfig.getDataSource().getConnection();
-//             PreparedStatement statement = connection.prepareStatement("\n" +
-//                     "DELETE FROM public.author \n" +
-//                     "WHERE name_author = (?)")) {
-//
-//            statement.setString(1, name);
-//            statement.executeUpdate();
-//        } catch (Exception e) {
-//            e.getStackTrace();
-//        }
-//    }
+    public void updateBuy(long id, String description, String client) {
+        try (Connection connection = DataBaseConfig.getDataSource().getConnection();
+             PreparedStatement statement = connection.prepareStatement("\n" +
+                     "UPDATE public.buy\n" +
+                     "SET buy_description = ?, client = ?\n" +
+                     "WHERE buy_id = ?")) {
+
+            statement.setString(1, description);
+            statement.setString(2, client);
+            statement.setLong(3, id);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+    }
 }
