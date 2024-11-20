@@ -21,7 +21,7 @@ public class BookService {
 
         return bookDTO;
     }
-    public void setByDTO(BookDTO bookDTO) {
+    public int setByDTO(BookDTO bookDTO) {
         String title = bookDTO.getTitle();
         Author author = bookDTO.getAuthor();
         String genre = bookDTO.getGenre();
@@ -29,7 +29,7 @@ public class BookService {
         int amount = bookDTO.getAmount();
 
         BookDAO bookDAO = new BookDAO();
-        bookDAO.setBook(title, author, genre, price, amount);
+        return bookDAO.setBook(title, author, genre, price, amount);
     }
     public void update(long id, BookDTO bookDTO) {
         BookDAO bookDAO = new BookDAO();
