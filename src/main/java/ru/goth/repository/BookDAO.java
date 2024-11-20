@@ -11,7 +11,8 @@ import java.sql.ResultSet;
 public class BookDAO {
     public Book getBook(long id) {
         try (Connection connection = DataBaseConfig.getDataSource().getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT *\n" +
+             PreparedStatement statement = connection.prepareStatement("\n" +
+                     "SELECT *\n" +
                      "FROM public.book\n" +
                      "WHERE book_id = ?")) {
             statement.setLong(1, id);
@@ -33,6 +34,41 @@ public class BookDAO {
         } catch (Exception e) {
             e.getStackTrace();
             return null;
+        }
+    }
+    public void setBook(String title, Author author, String genre, float price, int amount) {
+        try (Connection connection = DataBaseConfig.getDataSource().getConnection();
+             PreparedStatement statement = connection.prepareStatement("\n" +
+                     "INSERT INTO public.book\n" +
+                     "(title, author_id, genre, price, amount)\n" +
+                     "VALUES (?, ?, ?, ?, ?)")) {
+
+            statement.setString(1, title);
+            statement.setLong(2, author.getId());
+            statement.setString(3, genre);
+            statement.setFloat(4, price);
+            statement.setInt(5, amount);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+    }
+    public void updateBook(long id, String title, Author author, String genre, float price, int amount) {
+        try (Connection connection = DataBaseConfig.getDataSource().getConnection();
+             PreparedStatement statement = connection.prepareStatement("\n" +
+                     "UPDATE public.book\n" +
+                     "SET title = ?, author_id = ?, genre = ?, price = ?, amount = ?\n" +
+                     "WHERE book_id = ?")) {
+
+            statement.setString(1, title);
+            statement.setLong(2, author.getId());
+            statement.setString(3, genre);
+            statement.setFloat(4, price);
+            statement.setInt(5, amount);
+            statement.setLong(6, id);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.getStackTrace();
         }
     }
 }
