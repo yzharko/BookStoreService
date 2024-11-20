@@ -1,7 +1,7 @@
 package ru.goth.controller.buybookservlets;
 
-import ru.goth.entity.dto.BookDTO;
-import ru.goth.service.BookService;
+import ru.goth.entity.BuyBook;
+import ru.goth.service.BuyBookService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "deleteBook", value = "/deleteBook")
+@WebServlet(name = "deleteBuyBook", value = "/deleteBuyBook")
 public class DeleteBuyBook extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
-        BookDTO bookDTO = new BookDTO();
-        bookDTO.setTitle(request.getParameter("title"));
+        BuyBook buyBook = new BuyBook();
+        buyBook.setId(Long.parseLong(request.getParameter("id")));
 
-        BookService bookService = new BookService();
-        bookService.deleteByDTO(bookDTO);
+        BuyBookService buyBookService = new BuyBookService();
+        buyBookService.deleteById(buyBook.getId());
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
 
         try {

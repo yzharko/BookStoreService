@@ -18,7 +18,6 @@ public class BuyBookService {
 
         return buyBookDTO;
     }
-
     public void setByDTO(BuyDTO buyDTO, BookDTO bookDTO, BuyBookDTO buyBookDTO) {
         BookService bookService = new BookService();
         int bookId = bookService.setByDTO(bookDTO);
@@ -28,5 +27,9 @@ public class BuyBookService {
 
         BuyBookDAO buyBookDAO = new BuyBookDAO();
         buyBookDAO.setBuyBook(buyId, bookId, buyBookDTO.getAmount());
+    }
+    public void deleteById(long id) {
+        BuyBookDAO buyBookDAO = new BuyBookDAO();
+        buyBookDAO.deleteBuyBook(id);
     }
 }

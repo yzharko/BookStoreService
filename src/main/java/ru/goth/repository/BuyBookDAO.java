@@ -1,7 +1,6 @@
 package ru.goth.repository;
 
 import ru.goth.config.DataBaseConfig;
-import ru.goth.entity.Author;
 import ru.goth.entity.Book;
 import ru.goth.entity.Buy;
 import ru.goth.entity.BuyBook;
@@ -45,7 +44,6 @@ public class BuyBookDAO {
             return null;
         }
     }
-
     public void setBuyBook(int buyId, int bookId, int amount) {
         try (Connection connection = DataBaseConfig.getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement("\n" +
@@ -59,6 +57,19 @@ public class BuyBookDAO {
             statement.executeUpdate();
 
         } catch (Exception e) {
+            e.getStackTrace();
+        }
+    }
+    public void deleteBuyBook(long id) {
+        try (Connection connection = DataBaseConfig.getDataSource().getConnection();
+             PreparedStatement statement = connection.prepareStatement("\n" +
+                     "DELETE FROM public.buy_book \n" +
+                     "WHERE buy_book_id = (?)")) {
+
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.getStackTrace();
         }
     }
