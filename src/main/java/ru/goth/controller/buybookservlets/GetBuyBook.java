@@ -10,24 +10,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @WebServlet(name = "getBuyBook", value = "/getBuyBook")
 public class GetBuyBook extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(GetBuyBook.class.getName());
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
-        long id = Long.parseLong(request.getParameter("buyBook.id"));
 
-        BuyBookService buyBookService = new BuyBookService();
-        BuyBookDTO buyBookDTO = buyBookService.getById(id);
+        try {
+            long id = Long.parseLong(request.getParameter("buyBook.id"));
 
-        request.setAttribute("buyBook", buyBookDTO);
+            BuyBookService buyBookService = new BuyBookService();
+            BuyBookDTO buyBookDTO = buyBookService.getById(id);
+
+            request.setAttribute("buyBook", buyBookDTO);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+        }
+
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/buyBookGetRes.jsp");
-
         try {
             requestDispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
     }
 
