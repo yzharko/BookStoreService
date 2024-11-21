@@ -20,7 +20,7 @@ public class PutBuyBook extends HttpServlet {
     private static final Logger logger = Logger.getLogger(PutBuyBook.class.getName());
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+    public void doPut(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
 
         try {

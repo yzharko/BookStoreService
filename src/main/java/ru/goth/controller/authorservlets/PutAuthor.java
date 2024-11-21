@@ -17,7 +17,7 @@ public class PutAuthor extends HttpServlet {
     private static final Logger logger = Logger.getLogger(PutAuthor.class.getName());
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+    public void doPut(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
 
         try {

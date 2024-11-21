@@ -18,7 +18,7 @@ public class PutBook extends HttpServlet {
     private static final Logger logger = Logger.getLogger(PutBook.class.getName());
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+    public void doPut(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
 
         try {

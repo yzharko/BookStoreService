@@ -17,7 +17,7 @@ public class DeleteAuthor extends HttpServlet {
     private static final Logger logger = Logger.getLogger(DeleteAuthor.class.getName());
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+    public void doDelete(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
 
         AuthorDTO authorDTO = new AuthorDTO();

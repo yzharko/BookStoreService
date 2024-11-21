@@ -17,7 +17,7 @@ public class DeleteBuyBook extends HttpServlet {
     private static final Logger logger = Logger.getLogger(DeleteBuyBook.class.getName());
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+    public void doDelete(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
 
         try {
