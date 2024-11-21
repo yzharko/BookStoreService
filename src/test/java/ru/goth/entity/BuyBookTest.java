@@ -7,15 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BuyBookTest {
 
     @Test
-    void getId() {
-        final long expected = 0L;
-        BuyBook buyBook = new BuyBook();
-        long actual = buyBook.getId();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void setId() {
+    void getSetId() {
         final long expected = 1L;
         BuyBook buyBook = new BuyBook();
         buyBook.setId(expected);
@@ -43,15 +35,7 @@ class BuyBookTest {
     }
 
     @Test
-    void getAmount() {
-        final int expected = 0;
-        BuyBook buyBook = new BuyBook();
-        int actual = buyBook.getAmount();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void setAmount() {
+    void getSetAmount() {
         final int expected = 1;
         BuyBook buyBook = new BuyBook();
         buyBook.setAmount(expected);

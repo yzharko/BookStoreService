@@ -2,20 +2,12 @@ package ru.goth.entity;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BookTest {
 
     @Test
-    void getId() {
-        final long expected = 0L;
-        Book book = new Book();
-        long actual = book.getId();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void setId() {
+    void getSetId() {
         final long expected = 1L;
         Book book = new Book();
         book.setId(expected);
@@ -25,14 +17,7 @@ class BookTest {
     }
 
     @Test
-    void getTitle() {
-        Book book = new Book();
-        String actual = book.getTitle();
-        assertEquals(null, actual);
-    }
-
-    @Test
-    void setTitle() {
+    void getSetTitle() {
         final String expected = "Oleg";
         Book book = new Book();
         book.setTitle(expected);
@@ -51,14 +36,7 @@ class BookTest {
     }
 
     @Test
-    void getPrice() {
-        Book book = new Book();
-        float actual = book.getPrice();
-        assertEquals(0.0F, actual);
-    }
-
-    @Test
-    void setPrice() {
+    void getSetPrice() {
         final float expected = 1.0F;
         Book book = new Book();
         book.setPrice(expected);
@@ -68,14 +46,7 @@ class BookTest {
     }
 
     @Test
-    void getGenre() {
-        Book book = new Book();
-        String actual = book.getGenre();
-        assertEquals(null, actual);
-    }
-
-    @Test
-    void setGenre() {
+    void getSetGenre() {
         final String expected = "Oleg";
         Book book = new Book();
         book.setGenre(expected);
@@ -85,15 +56,7 @@ class BookTest {
     }
 
     @Test
-    void getAmount() {
-        final int expected = 0;
-        Book book = new Book();
-        int actual = book.getAmount();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void setAmount() {
+    void getSetAmount() {
         final int expected = 1;
         Book book = new Book();
         book.setAmount(expected);

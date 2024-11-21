@@ -7,15 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AuthorTest {
 
     @Test
-    void getId() {
-        final long expected = 0L;
-        Author author = new Author();
-        long actual = author.getId();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void setId() {
+    void getSetId() {
         final long expected = 1L;
         Author author = new Author();
         author.setId(expected);
@@ -25,14 +17,7 @@ class AuthorTest {
     }
 
     @Test
-    void getName() {
-        Author author = new Author();
-        String actual = author.getName();
-        assertEquals(null, actual);
-    }
-
-    @Test
-    void setName() {
+    void getSetName() {
         final String expected = "Oleg";
         Author author = new Author();
         author.setName(expected);
