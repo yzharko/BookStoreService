@@ -7,8 +7,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 public class BuyDAO {
+    private static final Logger logger = Logger.getLogger(BuyDAO.class.getName());
+
     public Buy getBuy(long id) {
         try (Connection connection = DataBaseConfig.getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT buy_description, client\n" +
@@ -24,8 +27,7 @@ public class BuyDAO {
             }
             return buy;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.info(e.getMessage());
             return null;
         }
     }
@@ -47,8 +49,7 @@ public class BuyDAO {
             }
             return generatedId;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.info(e.getMessage());
             return 0;
         }
     }
@@ -64,7 +65,7 @@ public class BuyDAO {
             statement.setLong(3, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            e.getStackTrace();
+            logger.info(e.getMessage());
         }
     }
 }

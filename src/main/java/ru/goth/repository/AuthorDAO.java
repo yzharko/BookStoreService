@@ -6,8 +6,11 @@ import ru.goth.entity.Author;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Logger;
 
 public class AuthorDAO {
+    private static final Logger logger = Logger.getLogger(AuthorDAO.class.getName());
+
     public Author getAuthor(long id) {
         try (Connection connection = DataBaseConfig.getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT author_id, name_author\n" +
@@ -22,8 +25,7 @@ public class AuthorDAO {
             }
             return author;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.info(e.getMessage());
             return null;
         }
     }
@@ -36,8 +38,7 @@ public class AuthorDAO {
             statement.setString(1, name);
             statement.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.info(e.getMessage());
         }
     }
     public void updateAuthor(long id, String name) {
@@ -51,8 +52,7 @@ public class AuthorDAO {
             statement.setLong(2, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.info(e.getMessage());
         }
     }
     public void deleteAuthor(String name) {
@@ -64,8 +64,7 @@ public class AuthorDAO {
             statement.setString(1, name);
             statement.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.info(e.getMessage());
         }
     }
 }

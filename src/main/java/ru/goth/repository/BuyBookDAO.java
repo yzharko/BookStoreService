@@ -8,8 +8,11 @@ import ru.goth.entity.BuyBook;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Logger;
 
 public class BuyBookDAO {
+    private static final Logger logger = Logger.getLogger(BuyBookDAO.class.getName());
+
     public BuyBook getBuyBook(long id) {
         try (Connection connection = DataBaseConfig.getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement("\n" +
@@ -39,8 +42,7 @@ public class BuyBookDAO {
 
             return buyBook;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.info(e.getMessage());
             return null;
         }
     }
@@ -56,7 +58,7 @@ public class BuyBookDAO {
             statement.setInt(3, amount);
             statement.executeUpdate();
         } catch (Exception e) {
-            e.getStackTrace();
+            logger.info(e.getMessage());
         }
     }
     public void updateBuyBook(long buyBookId, long buyId, long bookId, int amount) {
@@ -72,8 +74,7 @@ public class BuyBookDAO {
             statement.setInt(4, amount);
             statement.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.info(e.getMessage());
         }
     }
     public void deleteBuyBook(long id) {
@@ -85,8 +86,7 @@ public class BuyBookDAO {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.info(e.getMessage());
         }
     }
 }

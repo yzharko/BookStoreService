@@ -8,8 +8,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 public class BookDAO {
+    private static final Logger logger = Logger.getLogger(BookDAO.class.getName());
+
     public Book getBook(long id) {
         try (Connection connection = DataBaseConfig.getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement("\n" +
@@ -33,7 +36,7 @@ public class BookDAO {
             book.setAuthor(author);
             return book;
         } catch (Exception e) {
-            e.getStackTrace();
+            logger.info(e.getMessage());
             return null;
         }
     }
@@ -60,8 +63,7 @@ public class BookDAO {
             }
             return generatedId;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.info(e.getMessage());
             return 0;
         }
     }
@@ -80,8 +82,7 @@ public class BookDAO {
             statement.setLong(6, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.info(e.getMessage());
         }
     }
     public void deleteBook(String title) {
@@ -93,8 +94,7 @@ public class BookDAO {
             statement.setString(1, title);
             statement.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.info(e.getMessage());
         }
     }
 }
