@@ -1,8 +1,24 @@
-Простой REST сервис - BookStoreService
+Простой REST сервис - BookStoreService (WIP)
 ===================
+Предметная область
+------------------
+* Книжный магазин
+  * Информационные объекты:
+    * Авторы
+      * Каждый автор написал несколько книг
+    * Книги
+      * Каждая книга написана одним автором
+      * Каждая книга может включаться в несколько заказов
+    * Заказы
+      * Каждый заказ может содержать несколько книг
+  * Связи:
+    * Авторы - Книги: "Один ко многим"
+    * Книги - Заказы: "Многие ко многим"
+    
+![alt text](https://downloader.disk.yandex.ru/preview/e0f7f2511fa0182d7ebeae4eca7e00867f68cafa7d65b8429e8fd2ae19d9fe93/673f140b/OurF9aHxwYs71F5yNFtARtKlhlIhxyh83R7yCmkyr9-CLeUMO4-bxbwQ6VTqTle4JgGElltWEsiZKnDcTv4WEA%3D%3D?uid=0&filename=sql_scheme.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x927)
 
 Постановка задачи
--------
+-----------------
 1) Сделать REST сервис с использованием JDBC и Servlet
 2) Функционал: любой на выбор; минимум CRUD сервис с несколькими entity
 3) Запрещено использовать: Spring, Hibernate, Lombok
