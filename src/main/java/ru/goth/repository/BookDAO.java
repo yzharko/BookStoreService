@@ -47,7 +47,6 @@ public class BookDAO {
                      "(title, author_id, genre, price, amount)\n" +
                      "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
 
-
             statement.setString(1, title);
             statement.setLong(2, author.getId());
             statement.setString(3, genre);
