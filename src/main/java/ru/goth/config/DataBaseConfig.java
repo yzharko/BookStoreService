@@ -6,6 +6,9 @@ import com.zaxxer.hikari.HikariDataSource;
 import javax.sql.DataSource;
 
 public class DataBaseConfig {
+    private DataBaseConfig() {
+        throw new IllegalStateException("Utility class");
+    }
     private static HikariDataSource dataSource;
     static {
         ConfigLoader configLoader = new ConfigLoader();
