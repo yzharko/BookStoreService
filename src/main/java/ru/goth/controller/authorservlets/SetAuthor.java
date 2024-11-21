@@ -10,24 +10,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @WebServlet(name = "setAuthor", value = "/setAuthor")
 public class SetAuthor extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(SetAuthor.class.getName());
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
+
         AuthorDTO authorDTO = new AuthorDTO();
         authorDTO.setName(request.getParameter("name"));
 
         AuthorService authorService = new AuthorService();
         authorService.setByDTO(authorDTO);
         response.setStatus(HttpServletResponse.SC_CREATED);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
 
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
         try {
             requestDispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
     }
 }
