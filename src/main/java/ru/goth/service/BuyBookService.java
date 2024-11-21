@@ -12,6 +12,8 @@ import ru.goth.repository.BuyDAO;
 import java.util.logging.Logger;
 
 public class BuyBookService {
+    private static final Logger logger = Logger.getLogger(BuyBookService.class.getName());
+
     public BuyBookDTO getById(long id) {
         BuyBookDAO buyBookDAO = new BuyBookDAO();
         BuyBook buyBook = buyBookDAO.getBuyBook(id);
@@ -39,7 +41,6 @@ public class BuyBookService {
         BuyBookDAO buyBookDAO = new BuyBookDAO();
 
         if (buyBookDAO.getBuyBook(buyId) == null) {
-            Logger logger = Logger.getLogger(getClass().getName());
             logger.info("No such buyBook");
         } else {
             String description = buyDTO.getDescription();

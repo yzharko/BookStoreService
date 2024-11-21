@@ -7,6 +7,8 @@ import ru.goth.repository.AuthorDAO;
 import java.util.logging.Logger;
 
 public class AuthorService {
+    private static final Logger logger = Logger.getLogger(AuthorService.class.getName());
+
     public AuthorDTO getById(long id) {
         AuthorDAO authorDAO = new AuthorDAO();
         Author author = authorDAO.getAuthor(id);
@@ -23,7 +25,6 @@ public class AuthorService {
     public void update(long id, AuthorDTO authorDTO) {
         AuthorDAO authorDAO = new AuthorDAO();
         if (authorDAO.getAuthor(id) == null) {
-            Logger logger = Logger.getLogger(getClass().getName());
             logger.info("No such author");
         } else {
             authorDAO.updateAuthor(id, authorDTO.getName());

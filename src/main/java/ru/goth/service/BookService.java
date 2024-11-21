@@ -8,6 +8,8 @@ import ru.goth.repository.BookDAO;
 import java.util.logging.Logger;
 
 public class BookService {
+    private static final Logger logger = Logger.getLogger(BookService.class.getName());
+
     public BookDTO getById(long id) {
         BookDAO bookDAO = new BookDAO();
         Book book = bookDAO.getBook(id);
@@ -34,7 +36,6 @@ public class BookService {
     public void update(long id, BookDTO bookDTO) {
         BookDAO bookDAO = new BookDAO();
         if (bookDAO.getBook(id) == null) {
-            Logger logger = Logger.getLogger(getClass().getName());
             logger.info("No such book");
         } else {
             String title = bookDTO.getTitle();
