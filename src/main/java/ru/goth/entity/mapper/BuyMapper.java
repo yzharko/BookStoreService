@@ -6,5 +6,5 @@ import ru.goth.entity.dto.BuyDTO;
 
 @Mapper
 public interface BuyMapper {
-    public BuyDTO toBuyDTO(Buy buy);
+    BuyDTO toBuyDTO(Buy buy);
 }

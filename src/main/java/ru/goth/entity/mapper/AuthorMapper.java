@@ -6,5 +6,5 @@ import ru.goth.entity.dto.AuthorDTO;
 
 @Mapper
 public interface AuthorMapper {
-    public AuthorDTO toAuthorDTO(Author author);
+    AuthorDTO toAuthorDTO(Author author);
 }

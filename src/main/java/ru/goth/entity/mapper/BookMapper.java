@@ -6,5 +6,5 @@ import ru.goth.entity.dto.BookDTO;
 
 @Mapper
 public interface BookMapper {
-    public BookDTO toBookDTO(Book book);
+    BookDTO toBookDTO(Book book);
 }
