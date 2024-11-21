@@ -1,9 +1,8 @@
 package ru.goth.entity.dto;
 
 import org.junit.jupiter.api.Test;
-import ru.goth.entity.Author;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AuthorDTOTest {
 

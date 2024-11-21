@@ -1,9 +1,8 @@
 package ru.goth.entity.dto;
 
 import org.junit.jupiter.api.Test;
-import ru.goth.entity.Buy;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BuyDTOTest {
 

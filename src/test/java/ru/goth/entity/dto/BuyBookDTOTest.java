@@ -3,9 +3,8 @@ package ru.goth.entity.dto;
 import org.junit.jupiter.api.Test;
 import ru.goth.entity.Book;
 import ru.goth.entity.Buy;
-import ru.goth.entity.BuyBook;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BuyBookDTOTest {
 
