@@ -11,29 +11,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @WebServlet(name = "updateBook", value = "/updateBook")
 public class PutBook extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(PutBook.class.getName());
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
-        long id = Long.parseLong(request.getParameter("book.id"));
 
-        BookDTO bookDTO = new BookDTO();
-        bookDTO.setTitle(request.getParameter("title"));
+        try {
+            long id = Long.parseLong(request.getParameter("book.id"));
 
-        Author author = new Author();
-        author.setId(Long.parseLong(request.getParameter("author.id")));
-        bookDTO.setAuthor(author);
+            BookDTO bookDTO = new BookDTO();
+            bookDTO.setTitle(request.getParameter("title"));
 
-        bookDTO.setGenre(request.getParameter("genre"));
-        bookDTO.setPrice(
-                Float.parseFloat(request.getParameter("price")));
-        bookDTO.setAmount(
-                Integer.parseInt(request.getParameter("amount")));
+            Author author = new Author();
+            author.setId(Long.parseLong(request.getParameter("author.id")));
+            bookDTO.setAuthor(author);
 
-        BookService bookService = new BookService();
-        bookService.update(id, bookDTO);
+            bookDTO.setGenre(request.getParameter("genre"));
+            bookDTO.setPrice(
+                    Float.parseFloat(request.getParameter("price")));
+            bookDTO.setAmount(
+                    Integer.parseInt(request.getParameter("amount")));
+
+            BookService bookService = new BookService();
+            bookService.update(id, bookDTO);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+        }
 
         response.setStatus(HttpServletResponse.SC_OK);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
@@ -41,7 +49,7 @@ public class PutBook extends HttpServlet {
         try {
             requestDispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
     }
 }

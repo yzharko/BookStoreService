@@ -22,8 +22,10 @@ public class GetAuthor extends HttpServlet {
 
         try {
             long id = Long.parseLong(request.getParameter("id"));
+
             AuthorService authorService = new AuthorService();
             AuthorDTO authorDTO = authorService.getById(id);
+
             request.setAttribute("author", authorDTO);
         } catch (Exception e) {
             logger.info(e.getMessage());

@@ -10,24 +10,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @WebServlet(name = "getBook", value = "/getBook")
 public class GetBook extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(GetBook.class.getName());
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
-        long id = Long.parseLong(request.getParameter("id"));
 
-        BookService bookService = new BookService();
-        BookDTO bookDTO = bookService.getById(id);
+        try {
+            long id = Long.parseLong(request.getParameter("id"));
 
-        request.setAttribute("book", bookDTO);
+            BookService bookService = new BookService();
+            BookDTO bookDTO = bookService.getById(id);
+
+            request.setAttribute("book", bookDTO);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+        }
+
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/bookGetRes.jsp");
-
         try {
             requestDispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
     }
 
