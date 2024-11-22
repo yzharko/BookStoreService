@@ -8,7 +8,7 @@ import ru.goth.entity.dto.AuthorDTO;
 import ru.goth.repository.AuthorDAO;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class AuthorServiceTest {
     private AuthorDAO mockAuthorDAO;
@@ -35,9 +35,9 @@ public class AuthorServiceTest {
     public void setByDTO() {
         final String name = "G.O.M.";
         mockAuthorDTO.setName(name);
-
-        Mockito.doNothing().when(mockAuthorDAO).setAuthor(mockAuthorDTO.getName());
         mockAuthorService.setByDTO(mockAuthorDTO);
+
+        verify(mockAuthorDAO, times(1)).setAuthor(mockAuthorDTO.getName());
     }
 
     @Test
@@ -48,9 +48,9 @@ public class AuthorServiceTest {
         mockAuthorDTO.setName(name);
 
         Mockito.when(mockAuthorDAO.getAuthor(id)).thenReturn(new Author(name));
-        Mockito.doNothing().when(mockAuthorDAO).updateAuthor(id, name);
 
         mockAuthorService.update(id, mockAuthorDTO);
+        verify(mockAuthorDAO, times(1)).updateAuthor(id, name);
     }
 
     @Test
@@ -58,8 +58,7 @@ public class AuthorServiceTest {
         final String name = "G.O.M.";
         mockAuthorDTO.setName(name);
 
-        Mockito.doNothing().when(mockAuthorDAO).deleteAuthor(mockAuthorDTO.getName());
-
         mockAuthorService.deleteByDTO(mockAuthorDTO);
+        verify(mockAuthorDAO, times(1)).deleteAuthor(mockAuthorDTO.getName());
     }
 }
