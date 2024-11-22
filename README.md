@@ -15,7 +15,8 @@
     * Авторы - Книги: "Один ко многим"
     * Книги - Заказы: "Многие ко многим"
     
-![alt text](https://downloader.disk.yandex.ru/preview/e0f7f2511fa0182d7ebeae4eca7e00867f68cafa7d65b8429e8fd2ae19d9fe93/673f140b/OurF9aHxwYs71F5yNFtARtKlhlIhxyh83R7yCmkyr9-CLeUMO4-bxbwQ6VTqTle4JgGElltWEsiZKnDcTv4WEA%3D%3D?uid=0&filename=sql_scheme.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=1920x927)
+![sql_scheme](https://github.com/user-attachments/assets/b34c5a8e-777c-4250-a306-dcf5c130dd9d)
+
 
  WIP*
 ----------
