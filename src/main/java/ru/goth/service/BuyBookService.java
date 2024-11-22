@@ -11,11 +11,18 @@ import java.util.logging.Logger;
 public class BuyBookService {
     private static final Logger logger = Logger.getLogger(BuyBookService.class.getName());
     private BuyBookDAO buyBookDAO;
+    private final BookService bookService;
+    private final BuyService buyService;
 
-    public BuyBookService () {}
+    public BuyBookService(BookService bookService, BuyService buyService) {
+        this.bookService = bookService;
+        this.buyService = buyService;
+    }
 
-    public BuyBookService (BuyBookDAO buyBookDAO) {
+    public BuyBookService(BuyBookDAO buyBookDAO, BookService bookService, BuyService buyService) {
         this.buyBookDAO = buyBookDAO;
+        this.bookService = bookService;
+        this.buyService = buyService;
     }
 
     public BuyBookDTO getById(long id) {
@@ -28,29 +35,24 @@ public class BuyBookService {
 
         return buyBookDTO;
     }
+
     public void setByDTO(BuyDTO buyDTO, BookDTO bookDTO, BuyBookDTO buyBookDTO) {
-        BookService bookService = new BookService();
         int bookId = bookService.setByDTO(bookDTO);
-
-        BuyService buyService = new BuyService();
         int buyId = buyService.setByDTO(buyDTO);
-
         buyBookDAO.setBuyBook(buyId, bookId, buyBookDTO.getAmount());
     }
-    public void update(long buyId, BuyDTO buyDTO, long bookId, BookDTO bookDTO, long buyBookId, BuyBookDTO buyBookDTO) {
-        BuyService buyService = new BuyService();
-        buyService.update(buyId, buyDTO);
 
-        BookService bookService = new BookService();
+    public void update(long buyId, BuyDTO buyDTO, long bookId, BookDTO bookDTO, long buyBookId, BuyBookDTO buyBookDTO) {
+        buyService.update(buyId, buyDTO);
         bookService.update(bookId, bookDTO);
 
         if (buyBookDAO.getBuyBook(buyId) == null) {
             logger.info("No such buyBook");
         } else {
-
             buyBookDAO.updateBuyBook(buyBookId, buyId, bookId, buyBookDTO.getAmount());
         }
     }
+
     public void deleteById(long id) {
         buyBookDAO.deleteBuyBook(id);
     }

@@ -11,10 +11,10 @@ public class BookService {
     private static final Logger logger = Logger.getLogger(BookService.class.getName());
     private BookDAO bookDAO;
 
-    public BookService() {}
+    public BookService() {
+    }
 
-    public BookService(BookDAO bookDAO)
-    {
+    public BookService(BookDAO bookDAO) {
         this.bookDAO = bookDAO;
     }
 
@@ -30,6 +30,7 @@ public class BookService {
 
         return bookDTO;
     }
+
     public int setByDTO(BookDTO bookDTO) {
         String title = bookDTO.getTitle();
         Author author = bookDTO.getAuthor();
@@ -39,6 +40,7 @@ public class BookService {
 
         return bookDAO.setBook(title, author, genre, price, amount);
     }
+
     public void update(long id, BookDTO bookDTO) {
         if (bookDAO.getBook(id) == null) {
             logger.info("No such book");
@@ -52,6 +54,7 @@ public class BookService {
             bookDAO.updateBook(id, title, author, genre, price, amount);
         }
     }
+
     public void deleteByDTO(BookDTO bookDTO) {
         bookDAO.deleteBook(bookDTO.getTitle());
     }

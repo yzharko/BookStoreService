@@ -24,9 +24,11 @@ public class AuthorService {
 
         return authorDTO;
     }
+
     public void setByDTO(AuthorDTO authorDTO) {
         authorDAO.setAuthor(authorDTO.getName());
     }
+
     public void update(long id, AuthorDTO authorDTO) {
         if (authorDAO.getAuthor(id) == null) {
             logger.info("No such author");
@@ -34,6 +36,7 @@ public class AuthorService {
             authorDAO.updateAuthor(id, authorDTO.getName());
         }
     }
+
     public void deleteByDTO(AuthorDTO authorDTO) {
         authorDAO.deleteAuthor(authorDTO.getName());
     }

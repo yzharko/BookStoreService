@@ -10,9 +10,10 @@ public class BuyService {
     private static final Logger logger = Logger.getLogger(BuyService.class.getName());
     private BuyDAO buyDAO;
 
-    BuyService() {}
-    BuyService(BuyDAO buyDAO)
-    {
+    BuyService() {
+    }
+
+    BuyService(BuyDAO buyDAO) {
         this.buyDAO = buyDAO;
     }
 
@@ -25,9 +26,11 @@ public class BuyService {
 
         return buyDTO;
     }
+
     public int setByDTO(BuyDTO buyDTO) {
         return buyDAO.setBuy(buyDTO.getDescription(), buyDTO.getClient());
     }
+
     public void update(long id, BuyDTO buyDTO) {
         if (buyDAO.getBuy(id) == null) {
             logger.info("No such buy");
@@ -35,7 +38,7 @@ public class BuyService {
             String description = buyDTO.getDescription();
             String client = buyDTO.getClient();
 
-            buyDAO.updateBuy(id, description,client);
+            buyDAO.updateBuy(id, description, client);
         }
     }
 }
