@@ -1,13 +1,13 @@
 package ru.goth.entity;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class BookTest {
+public class BookTest {
 
     @Test
-    void getSetId() {
+    public void getSetId() {
         final long expected = 1L;
         Book book = new Book();
         book.setId(expected);
@@ -17,7 +17,7 @@ class BookTest {
     }
 
     @Test
-    void getSetTitle() {
+    public void getSetTitle() {
         final String expected = "Oleg";
         Book book = new Book();
         book.setTitle(expected);
@@ -27,7 +27,7 @@ class BookTest {
     }
 
     @Test
-    void getSetAuthor() {
+    public void getSetAuthor() {
         final Author expected = new Author();
         Book book = new Book();
         book.setAuthor(expected);
@@ -36,17 +36,18 @@ class BookTest {
     }
 
     @Test
-    void getSetPrice() {
+    public void getSetPrice() {
         final float expected = 1.0F;
+        final float delta = 1e-15F;
         Book book = new Book();
         book.setPrice(expected);
         float actual = book.getPrice();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, delta);
     }
 
     @Test
-    void getSetGenre() {
+    public void getSetGenre() {
         final String expected = "Oleg";
         Book book = new Book();
         book.setGenre(expected);
@@ -56,7 +57,7 @@ class BookTest {
     }
 
     @Test
-    void getSetAmount() {
+    public void getSetAmount() {
         final int expected = 1;
         Book book = new Book();
         book.setAmount(expected);
@@ -66,7 +67,7 @@ class BookTest {
     }
 
     @Test
-    void testToString() {
+    public void testToString() {
         Book book = new Book();
         Author author = new Author();
         book.setAuthor(author);

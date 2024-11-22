@@ -1,13 +1,13 @@
 package ru.goth.entity;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class BuyBookTest {
+public class BuyBookTest {
 
     @Test
-    void getSetId() {
+    public void getSetId() {
         final long expected = 1L;
         BuyBook buyBook = new BuyBook();
         buyBook.setId(expected);
@@ -17,7 +17,7 @@ class BuyBookTest {
     }
 
     @Test
-    void getSetBuy() {
+    public void getSetBuy() {
         final Buy expected = new Buy();
         BuyBook buyBook = new BuyBook();
         buyBook.setBuy(expected);
@@ -26,7 +26,7 @@ class BuyBookTest {
     }
 
     @Test
-    void getSetBook() {
+    public void getSetBook() {
         final Book expected = new Book();
         BuyBook buyBook = new BuyBook();
         buyBook.setBook(expected);
@@ -35,7 +35,7 @@ class BuyBookTest {
     }
 
     @Test
-    void getSetAmount() {
+    public void getSetAmount() {
         final int expected = 1;
         BuyBook buyBook = new BuyBook();
         buyBook.setAmount(expected);

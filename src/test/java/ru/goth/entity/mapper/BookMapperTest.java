@@ -1,16 +1,16 @@
 package ru.goth.entity.mapper;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.mapstruct.factory.Mappers;
 import ru.goth.entity.Book;
 import ru.goth.entity.dto.BookDTO;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-class BookMapperTest {
+public class BookMapperTest {
 
     @Test
-    void toBookDTO() {
+    public void toBookDTO() {
         final long id = 1L;
         final String title = "Pablo";
         Book book = new Book();

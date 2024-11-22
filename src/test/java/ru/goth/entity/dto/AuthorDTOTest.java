@@ -1,13 +1,13 @@
 package ru.goth.entity.dto;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class AuthorDTOTest {
+public class AuthorDTOTest {
 
     @Test
-    void getSetName() {
+    public void getSetName() {
         final String expected = "Oleg";
         AuthorDTO author = new AuthorDTO();
         author.setName(expected);

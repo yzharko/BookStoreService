@@ -1,16 +1,16 @@
 package ru.goth.entity.mapper;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.mapstruct.factory.Mappers;
 import ru.goth.entity.Buy;
 import ru.goth.entity.dto.BuyDTO;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-class BuyMapperTest {
+public class BuyMapperTest {
 
     @Test
-    void toBuyDTO() {
+    public void toBuyDTO() {
         final long id = 1L;
         final String description = "Pablo";
         Buy buy = new Buy();

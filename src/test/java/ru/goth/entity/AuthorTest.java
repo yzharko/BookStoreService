@@ -1,13 +1,13 @@
 package ru.goth.entity;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class AuthorTest {
+public class AuthorTest {
 
     @Test
-    void getSetId() {
+    public void getSetId() {
         final long expected = 1L;
         Author author = new Author();
         author.setId(expected);
@@ -17,7 +17,7 @@ class AuthorTest {
     }
 
     @Test
-    void getSetName() {
+    public void getSetName() {
         final String expected = "Oleg";
         Author author = new Author();
         author.setName(expected);
@@ -27,7 +27,7 @@ class AuthorTest {
     }
 
     @Test
-    void testToString() {
+    public void testToString() {
         final long id = 1L;
         final String name = "Oleg";
         Author author = new Author(id, name);

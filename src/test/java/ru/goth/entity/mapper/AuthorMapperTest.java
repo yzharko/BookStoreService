@@ -1,16 +1,16 @@
 package ru.goth.entity.mapper;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.mapstruct.factory.Mappers;
 import ru.goth.entity.Author;
 import ru.goth.entity.dto.AuthorDTO;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-class AuthorMapperTest {
+public class AuthorMapperTest {
 
     @Test
-    void toAuthorDTO() {
+    public void toAuthorDTO() {
         final long id = 1L;
         final String name = "Pablo";
         Author author = new Author();

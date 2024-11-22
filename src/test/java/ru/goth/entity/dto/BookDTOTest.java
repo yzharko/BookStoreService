@@ -1,14 +1,14 @@
 package ru.goth.entity.dto;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import ru.goth.entity.Author;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class BookDTOTest {
+public class BookDTOTest {
 
     @Test
-    void getSetTitle() {
+    public void getSetTitle() {
         final String expected = "Oleg";
         BookDTO book = new BookDTO();
         book.setTitle(expected);
@@ -18,7 +18,7 @@ class BookDTOTest {
     }
 
     @Test
-    void getSetAuthor() {
+    public void getSetAuthor() {
         final Author expected = new Author();
         BookDTO book = new BookDTO();
         book.setAuthor(expected);
@@ -27,7 +27,7 @@ class BookDTOTest {
     }
 
     @Test
-    void getSetGenre() {
+    public void getSetGenre() {
         final String expected = "Oleg";
         BookDTO book = new BookDTO();
         book.setGenre(expected);
@@ -37,17 +37,18 @@ class BookDTOTest {
     }
 
     @Test
-    void getSetPrice() {
+    public void getSetPrice() {
         final float expected = 1.0F;
+        final float delta = 1e-15F;
         BookDTO book = new BookDTO();
         book.setPrice(expected);
         float actual = book.getPrice();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, delta);
     }
 
     @Test
-    void getSetAmount() {
+    public void getSetAmount() {
         final int expected = 1;
         BookDTO book = new BookDTO();
         book.setAmount(expected);

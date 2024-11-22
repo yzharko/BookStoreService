@@ -1,15 +1,15 @@
 package ru.goth.entity.dto;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import ru.goth.entity.Book;
 import ru.goth.entity.Buy;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class BuyBookDTOTest {
+public class BuyBookDTOTest {
 
     @Test
-    void getSetBuy() {
+    public void getSetBuy() {
         final Buy expected = new Buy();
         BuyBookDTO buyBook = new BuyBookDTO();
         buyBook.setBuy(expected);
@@ -18,7 +18,7 @@ class BuyBookDTOTest {
     }
 
     @Test
-    void getSetBook() {
+    public void getSetBook() {
         final Book expected = new Book();
         BuyBookDTO buyBook = new BuyBookDTO();
         buyBook.setBook(expected);
@@ -27,7 +27,7 @@ class BuyBookDTOTest {
     }
 
     @Test
-    void getSetAmount() {
+    public void getSetAmount() {
         final int expected = 1;
         BuyBookDTO buyBook = new BuyBookDTO();
         buyBook.setAmount(expected);
