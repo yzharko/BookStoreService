@@ -10,9 +10,15 @@ import java.util.logging.Logger;
 
 public class BuyBookService {
     private static final Logger logger = Logger.getLogger(BuyBookService.class.getName());
+    private BuyBookDAO buyBookDAO;
+
+    public BuyBookService () {}
+
+    public BuyBookService (BuyBookDAO buyBookDAO) {
+        this.buyBookDAO = buyBookDAO;
+    }
 
     public BuyBookDTO getById(long id) {
-        BuyBookDAO buyBookDAO = new BuyBookDAO();
         BuyBook buyBook = buyBookDAO.getBuyBook(id);
 
         BuyBookDTO buyBookDTO = new BuyBookDTO();
@@ -29,7 +35,6 @@ public class BuyBookService {
         BuyService buyService = new BuyService();
         int buyId = buyService.setByDTO(buyDTO);
 
-        BuyBookDAO buyBookDAO = new BuyBookDAO();
         buyBookDAO.setBuyBook(buyId, bookId, buyBookDTO.getAmount());
     }
     public void update(long buyId, BuyDTO buyDTO, long bookId, BookDTO bookDTO, long buyBookId, BuyBookDTO buyBookDTO) {
@@ -39,7 +44,6 @@ public class BuyBookService {
         BookService bookService = new BookService();
         bookService.update(bookId, bookDTO);
 
-        BuyBookDAO buyBookDAO = new BuyBookDAO();
         if (buyBookDAO.getBuyBook(buyId) == null) {
             logger.info("No such buyBook");
         } else {
@@ -48,7 +52,6 @@ public class BuyBookService {
         }
     }
     public void deleteById(long id) {
-        BuyBookDAO buyBookDAO = new BuyBookDAO();
         buyBookDAO.deleteBuyBook(id);
     }
 }

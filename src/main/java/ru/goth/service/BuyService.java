@@ -8,9 +8,15 @@ import java.util.logging.Logger;
 
 public class BuyService {
     private static final Logger logger = Logger.getLogger(BuyService.class.getName());
+    private BuyDAO buyDAO;
+
+    BuyService() {}
+    BuyService(BuyDAO buyDAO)
+    {
+        this.buyDAO = buyDAO;
+    }
 
     public BuyDTO getById(long id) {
-        BuyDAO buyDAO = new BuyDAO();
         Buy buy = buyDAO.getBuy(id);
 
         BuyDTO buyDTO = new BuyDTO();
@@ -20,11 +26,9 @@ public class BuyService {
         return buyDTO;
     }
     public int setByDTO(BuyDTO buyDTO) {
-        BuyDAO buyDAO = new BuyDAO();
         return buyDAO.setBuy(buyDTO.getDescription(), buyDTO.getClient());
     }
     public void update(long id, BuyDTO buyDTO) {
-        BuyDAO buyDAO = new BuyDAO();
         if (buyDAO.getBuy(id) == null) {
             logger.info("No such buy");
         } else {

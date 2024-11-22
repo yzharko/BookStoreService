@@ -8,9 +8,15 @@ import java.util.logging.Logger;
 
 public class AuthorService {
     private static final Logger logger = Logger.getLogger(AuthorService.class.getName());
+    private AuthorDAO authorDAO;
+
+    public  AuthorService() {}
+
+    public AuthorService(AuthorDAO authorDAO) {
+        this.authorDAO = authorDAO;
+    }
 
     public AuthorDTO getById(long id) {
-        AuthorDAO authorDAO = new AuthorDAO();
         Author author = authorDAO.getAuthor(id);
 
         AuthorDTO authorDTO = new AuthorDTO();
@@ -19,11 +25,9 @@ public class AuthorService {
         return authorDTO;
     }
     public void setByDTO(AuthorDTO authorDTO) {
-        AuthorDAO authorDAO = new AuthorDAO();
         authorDAO.setAuthor(authorDTO.getName());
     }
     public void update(long id, AuthorDTO authorDTO) {
-        AuthorDAO authorDAO = new AuthorDAO();
         if (authorDAO.getAuthor(id) == null) {
             logger.info("No such author");
         } else {
@@ -31,7 +35,6 @@ public class AuthorService {
         }
     }
     public void deleteByDTO(AuthorDTO authorDTO) {
-        AuthorDAO authorDAO = new AuthorDAO();
         authorDAO.deleteAuthor(authorDTO.getName());
     }
 }
