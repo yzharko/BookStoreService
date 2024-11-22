@@ -17,6 +17,12 @@ import java.util.logging.Logger;
 public class SetBook extends HttpServlet {
     private static final Logger logger = Logger.getLogger(SetBook.class.getName());
 
+    private final BookService bookService;
+
+    public SetBook(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
@@ -35,7 +41,6 @@ public class SetBook extends HttpServlet {
             bookDTO.setAmount(
                     Integer.parseInt(request.getParameter("amount")));
 
-            BookService bookService = new BookService();
             bookService.setByDTO(bookDTO);
         } catch (Exception e) {
             logger.info(e.getMessage());

@@ -18,6 +18,11 @@ import java.util.logging.Logger;
 @WebServlet(name = "updateBuyBook", value = "/updateBuyBook")
 public class PutBuyBook extends HttpServlet {
     private static final Logger logger = Logger.getLogger(PutBuyBook.class.getName());
+    private final BuyBookService buyBookService;
+
+    public PutBuyBook(BuyBookService buyBookService) {
+        this.buyBookService = buyBookService;
+    }
 
     @Override
     public void doPut(HttpServletRequest request, HttpServletResponse response) {
@@ -48,7 +53,6 @@ public class PutBuyBook extends HttpServlet {
             BuyBookDTO buyBookDTO = new BuyBookDTO();
             buyBookDTO.setAmount(Integer.parseInt(request.getParameter("buyBook.amount")));
 
-            BuyBookService buyBookService = new BuyBookService();
             buyBookService.update(buyId, buyDTO, bookId, bookDTO, buyBookId, buyBookDTO);
 
             response.setStatus(HttpServletResponse.SC_OK);

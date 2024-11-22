@@ -16,6 +16,12 @@ import java.util.logging.Logger;
 public class DeleteBuyBook extends HttpServlet {
     private static final Logger logger = Logger.getLogger(DeleteBuyBook.class.getName());
 
+    private final BuyBookService buyBookService;
+
+    public DeleteBuyBook(BuyBookService buyBookService) {
+        this.buyBookService = buyBookService;
+    }
+
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
@@ -24,7 +30,6 @@ public class DeleteBuyBook extends HttpServlet {
             BuyBook buyBook = new BuyBook();
             buyBook.setId(Long.parseLong(request.getParameter("id")));
 
-            BuyBookService buyBookService = new BuyBookService();
             buyBookService.deleteById(buyBook.getId());
         } catch (Exception e) {
             logger.info(e.getMessage());

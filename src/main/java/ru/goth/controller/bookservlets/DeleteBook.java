@@ -16,6 +16,12 @@ import java.util.logging.Logger;
 public class DeleteBook extends HttpServlet {
     private static final Logger logger = Logger.getLogger(DeleteBook.class.getName());
 
+    private final BookService bookService;
+
+    public DeleteBook(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
@@ -23,7 +29,6 @@ public class DeleteBook extends HttpServlet {
         BookDTO bookDTO = new BookDTO();
         bookDTO.setTitle(request.getParameter("title"));
 
-        BookService bookService = new BookService();
         bookService.deleteByDTO(bookDTO);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");

@@ -15,6 +15,11 @@ import java.util.logging.Logger;
 @WebServlet(name = "updateAuthor", value = "/updateAuthor")
 public class PutAuthor extends HttpServlet {
     private static final Logger logger = Logger.getLogger(PutAuthor.class.getName());
+    private final AuthorService authorService;
+
+    public PutAuthor(AuthorService authorService) {
+        this.authorService = authorService;
+    }
 
     @Override
     public void doPut(HttpServletRequest request, HttpServletResponse response) {
@@ -25,7 +30,6 @@ public class PutAuthor extends HttpServlet {
             AuthorDTO authorDTO = new AuthorDTO();
             authorDTO.setName(request.getParameter("name"));
 
-            AuthorService authorService = new AuthorService();
             authorService.update(id, authorDTO);
 
             response.setStatus(HttpServletResponse.SC_OK);

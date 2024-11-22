@@ -16,6 +16,12 @@ import java.util.logging.Logger;
 public class GetBook extends HttpServlet {
     private static final Logger logger = Logger.getLogger(GetBook.class.getName());
 
+    private final BookService bookService;
+
+    public GetBook(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
@@ -23,7 +29,6 @@ public class GetBook extends HttpServlet {
         try {
             long id = Long.parseLong(request.getParameter("id"));
 
-            BookService bookService = new BookService();
             BookDTO bookDTO = bookService.getById(id);
 
             request.setAttribute("book", bookDTO);
