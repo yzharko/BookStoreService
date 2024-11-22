@@ -1,68 +1,65 @@
 package ru.goth.service;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mockito;
+import ru.goth.entity.Author;
 import ru.goth.entity.dto.AuthorDTO;
+import ru.goth.repository.AuthorDAO;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
-class AuthorServiceTest {
+public class AuthorServiceTest {
+    private AuthorDAO mockAuthorDAO;
+    private AuthorService mockAuthorService;
+    private final AuthorDTO mockAuthorDTO = new AuthorDTO();
 
-    @Test
-    void getById() {
-        AuthorService mockAuthorService = Mockito.mock(AuthorService.class);
-
-        final long id = 1L;
-        final String name = "G.O.M.";
-
-        AuthorDTO mockAuthorDTO = new AuthorDTO();
-        mockAuthorDTO.setName(name);
-
-        Mockito.when(mockAuthorService.getById(id)).thenReturn(mockAuthorDTO);
-        assertEquals(mockAuthorDTO, mockAuthorService.getById(id));
+    @Before
+    public void setup() {
+        mockAuthorDAO = mock(AuthorDAO.class);
+        mockAuthorService = new AuthorService(mockAuthorDAO);
     }
 
     @Test
-    void setByDTO() {
-        AuthorService mockAuthorService = Mockito.mock(AuthorService.class);
-
+    public void getById() {
+        final long id = 1L;
         final String name = "G.O.M.";
-        AuthorDTO mockAuthorDTO = new AuthorDTO();
         mockAuthorDTO.setName(name);
 
-        Mockito.doNothing().when(mockAuthorService).setByDTO(mockAuthorDTO);
+        Mockito.when(mockAuthorDAO.getAuthor(id)).thenReturn(new Author(name));
+        assertEquals(mockAuthorDTO.getName(), mockAuthorService.getById(id).getName());
+    }
 
+    @Test
+    public void setByDTO() {
+        final String name = "G.O.M.";
+        mockAuthorDTO.setName(name);
+
+        Mockito.doNothing().when(mockAuthorDAO).setAuthor(mockAuthorDTO.getName());
         mockAuthorService.setByDTO(mockAuthorDTO);
-        Mockito.verify(mockAuthorService).setByDTO(mockAuthorDTO);
     }
 
     @Test
-    void update() {
-        AuthorService mockAuthorService = Mockito.mock(AuthorService.class);
-
+    public void update() {
         final long id = 1L;
         final String name = "G.O.M.";
 
-        AuthorDTO mockAuthorDTO = new AuthorDTO();
         mockAuthorDTO.setName(name);
 
-        Mockito.doNothing().when(mockAuthorService).update(id, mockAuthorDTO);
+        Mockito.when(mockAuthorDAO.getAuthor(id)).thenReturn(new Author(name));
+        Mockito.doNothing().when(mockAuthorDAO).updateAuthor(id, name);
 
         mockAuthorService.update(id, mockAuthorDTO);
-        Mockito.verify(mockAuthorService).update(id, mockAuthorDTO);
     }
 
     @Test
-    void deleteByDTO() {
-        AuthorService mockAuthorService = Mockito.mock(AuthorService.class);
-
+    public void deleteByDTO() {
         final String name = "G.O.M.";
-        AuthorDTO mockAuthorDTO = new AuthorDTO();
         mockAuthorDTO.setName(name);
 
-        Mockito.doNothing().when(mockAuthorService).deleteByDTO(mockAuthorDTO);
+        Mockito.doNothing().when(mockAuthorDAO).deleteAuthor(mockAuthorDTO.getName());
 
         mockAuthorService.deleteByDTO(mockAuthorDTO);
-        Mockito.verify(mockAuthorService).deleteByDTO(mockAuthorDTO);
     }
 }

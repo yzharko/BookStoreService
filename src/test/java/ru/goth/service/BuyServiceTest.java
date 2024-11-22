@@ -1,56 +1,67 @@
 package ru.goth.service;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mockito;
-import ru.goth.entity.dto.BookDTO;
+import ru.goth.entity.Buy;
 import ru.goth.entity.dto.BuyDTO;
+import ru.goth.repository.BuyDAO;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
-class BuyServiceTest {
+public class BuyServiceTest {
+    private BuyDAO mockBuyDAO;
+    private BuyService mockBuyService;
+    private final BuyDTO mockBuyDTO = new BuyDTO();
 
-    @Test
-    void getById() {
-        BuyService mockBuyService = Mockito.mock(BuyService.class);
-
-        final long id = 1L;
-        final String description = "Deliver only during night time";
-
-        BuyDTO mockBuyDTO = new BuyDTO();
-        mockBuyDTO.setDescription(description);
-
-        Mockito.when(mockBuyService.getById(id)).thenReturn(mockBuyDTO);
-        assertEquals(mockBuyDTO, mockBuyService.getById(id));
+    @Before
+    public void setup() {
+        mockBuyDAO = mock(BuyDAO.class);
+        mockBuyService = new BuyService(mockBuyDAO);
     }
 
     @Test
-    void setByDTO() {
-        BuyService mockBuyService = Mockito.mock(BuyService.class);
+    public void getById() {
+        final long id = 1L;
+        final String description = "Deliver only during night time";
+
+        mockBuyDTO.setDescription(description);
+        Buy buy = new Buy();
+        buy.setDescription(description);
+
+        Mockito.when(mockBuyDAO.getBuy(id)).thenReturn(buy);
+        assertEquals(mockBuyDTO.getDescription(), mockBuyService.getById(id).getDescription());
+    }
+
+    @Test
+    public void setByDTO() {
 
         final int id = 1;
         final String description = "Deliver only during night time";
+        final String client = "GothGamerGhoul282";
 
-        BuyDTO mockBuyDTO = new BuyDTO();
         mockBuyDTO.setDescription(description);
 
-        Mockito.when(mockBuyService.setByDTO(mockBuyDTO)).thenReturn(id);
+        Mockito.when(mockBuyDAO.setBuy(description, client)).thenReturn(id);
 
         assertEquals(id, mockBuyService.setByDTO(mockBuyDTO));
     }
 
     @Test
-    void update() {
-        BuyService mockBuyService = Mockito.mock(BuyService.class);
+    public void update() {
 
-        final int id = 1;
+        final long id = 1;
         final String description = "Deliver only during night time";
+        final String client = "GothGamerGhoul282";
 
-        BuyDTO mockBuyDTO = new BuyDTO();
         mockBuyDTO.setDescription(description);
+        Buy buy = new Buy();
+        buy.setDescription(description);
 
-        Mockito.doNothing().when(mockBuyService).update(id, mockBuyDTO);
+        Mockito.when(mockBuyDAO.getBuy(id)).thenReturn(buy);
+        Mockito.doNothing().when(mockBuyDAO).updateBuy(id, description, client);
 
         mockBuyService.update(id, mockBuyDTO);
-        Mockito.verify(mockBuyService).update(id, mockBuyDTO);
     }
 }
