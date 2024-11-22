@@ -10,17 +10,13 @@ import ru.goth.entity.BuyBook;
 import ru.goth.entity.dto.BookDTO;
 import ru.goth.entity.dto.BuyBookDTO;
 import ru.goth.entity.dto.BuyDTO;
-import ru.goth.repository.BookDAO;
 import ru.goth.repository.BuyBookDAO;
-import ru.goth.repository.BuyDAO;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class BuyBookServiceTest {
     private BuyBookDAO mockBuyBookDAO;
-    private BookDAO mockBookDAO;
-    private BuyDAO mockBuyDAO;
 
     private BuyBookService mockBuyBookService;
     private BookService mockBookService;
@@ -33,12 +29,10 @@ public class BuyBookServiceTest {
     @Before
     public void setup() {
         mockBuyBookDAO = mock(BuyBookDAO.class);
-        mockBookDAO = mock(BookDAO.class);
-        mockBuyDAO = mock(BuyDAO.class);
 
-        mockBuyBookService = new BuyBookService(mockBuyBookDAO);
-        mockBookService = new BookService(mockBookDAO);
-        mockBuyService = new BuyService(mockBuyDAO);
+        mockBookService = mock(BookService.class);
+        mockBuyService = mock(BuyService.class);
+        mockBuyBookService = new BuyBookService(mockBuyBookDAO, mockBookService, mockBuyService);
     }
 
     @Test
@@ -62,73 +56,78 @@ public class BuyBookServiceTest {
         Mockito.when(mockBuyBookDAO.getBuyBook(id)).thenReturn(buyBook);
         assertEquals(mockBuyBookDTO.getBook().getTitle(), mockBuyBookService.getById(id).getBook().getTitle());
     }
-//
-//    @Test
-//    public void setByDTO() {
-//
-//        final String title = "Occult encyclopedia";
-//        mockBookDTO.setTitle(title);
-//
-//        final String description = "Deliver only during night time";
-//        final String client = "GothGamerGhoul282";
-//        mockBuyDTO.setDescription(description);
-//        int id = 1;
-//
-//        Mockito.when(mockBuyDAO.setBuy(description, client)).thenReturn(id);
-//
-//        final Author author = new Author();
-//        author.setId(1L);
-//        author.setName(title);
-//        final String genre = "Occult";
-//        final float price = 228.00F;
-//        final int amount = 1;
-//
-//        Mockito.when(mockBookDAO.setBook(title, author, genre, price, amount)).thenReturn(id);
-//
-//        Mockito.when(mockBookService.setByDTO(mockBookDTO)).thenReturn(1);
-//        Mockito.when(mockBuyService.setByDTO(mockBuyDTO)).thenReturn(1);
-//
-//        Mockito.doNothing().when(mockBuyBookDAO).setBuyBook(id, id, mockBuyBookDTO.getAmount());
-//
-//        mockBuyBookService.setByDTO(mockBuyDTO, mockBookDTO, mockBuyBookDTO);
-//    }
-//
-//    @Test
-//    public void update() {
-//
-//        final String title = "Occult encyclopedia";
-//        mockBookDTO.setTitle(title);
-//
-//        final String description = "Deliver only during night time";
-//        mockBuyDTO.setDescription(description);
-//
-//        final long buyId = 1L;
-//        final long bookId = 1L;
-//        final long buyBookId = 1L;
-//        int amount = 1;
-//
-//        final String client = "GothGamerGhoul282";
-//        mockBuyDTO.setDescription(description);
-//
-//        final Author author = new Author();
-//        author.setId(1L);
-//        author.setName(title);
-//        final String genre = "Occult";
-//        final float price = 228.00F;
-//
-//        Mockito.doNothing().when(mockBookDAO).updateBook(bookId, title, author, genre, price, amount);
-//        Mockito.doNothing().when(mockBuyDAO).updateBuy(buyId, description, client);
-//        Mockito.doNothing().when(mockBuyBookDAO).updateBuyBook(buyBookId, buyId, bookId, amount);
-//
-//        mockBuyBookService.update(buyId, mockBuyDTO, bookId, mockBookDTO, buyBookId, mockBuyBookDTO);
-//    }
+
+    @Test
+    public void setByDTO() {
+
+        final String description = "Deliver only during night time";
+        final String client = "GothGamerGhoul282";
+        mockBuyDTO.setDescription(description);
+        mockBuyDTO.setClient(client);
+        final int id = 1;
+
+        final String title = "Occult encyclopedia";
+        final Author author = new Author();
+        author.setId(1L);
+        author.setName("Test");
+        final String genre = "Occult";
+        final float price = 228.00F;
+        final int amount = 1;
+
+        mockBookDTO.setTitle(title);
+        mockBookDTO.setAuthor(author);
+        mockBookDTO.setGenre(genre);
+        mockBookDTO.setPrice(price);
+        mockBookDTO.setAmount(amount);
+
+        mockBuyBookDTO.setAmount(1);
+
+        Mockito.when(mockBookService.setByDTO(mockBookDTO)).thenReturn(id);
+        Mockito.when(mockBuyService.setByDTO(mockBuyDTO)).thenReturn(id);
+
+        mockBuyBookService.setByDTO(mockBuyDTO, mockBookDTO, mockBuyBookDTO);
+
+        verify(mockBuyBookDAO, times(1)).setBuyBook(mockBuyService.setByDTO(mockBuyDTO),
+                mockBookService.setByDTO(mockBookDTO), mockBuyBookDTO.getAmount());
+    }
+
+    @Test
+    public void update() {
+
+        final String description = "Deliver only during night time";
+        final String client = "GothGamerGhoul282";
+        mockBuyDTO.setDescription(description);
+        mockBuyDTO.setClient(client);
+        final long id = 1;
+
+        final String title = "Occult encyclopedia";
+        final Author author = new Author();
+        author.setId(1L);
+        author.setName("Test");
+        final String genre = "Occult";
+        final float price = 228.00F;
+        final int amount = 1;
+
+        mockBookDTO.setTitle(title);
+        mockBookDTO.setAuthor(author);
+        mockBookDTO.setGenre(genre);
+        mockBookDTO.setPrice(price);
+        mockBookDTO.setAmount(amount);
+
+        Mockito.when(mockBuyBookDAO.getBuyBook(id)).thenReturn(new BuyBook());
+
+        mockBuyBookService.update(id, mockBuyDTO, id, mockBookDTO, id, mockBuyBookDTO);
+
+        verify(mockBuyService, times(1)).update(id, mockBuyDTO);
+        verify(mockBookService, times(1)).update(id, mockBookDTO);
+        verify(mockBuyBookDAO, times(1)).updateBuyBook(id, id, id, mockBuyBookDTO.getAmount());
+    }
 
     @Test
     public void deleteById() {
         final long id = 1L;
 
-        Mockito.doNothing().when(mockBuyBookDAO).deleteBuyBook(id);
-
         mockBuyBookService.deleteById(id);
+        verify(mockBuyBookDAO, times(1)).deleteBuyBook(id);
     }
 }

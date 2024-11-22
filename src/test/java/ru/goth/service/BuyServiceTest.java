@@ -8,7 +8,7 @@ import ru.goth.entity.dto.BuyDTO;
 import ru.goth.repository.BuyDAO;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class BuyServiceTest {
     private BuyDAO mockBuyDAO;
@@ -42,6 +42,7 @@ public class BuyServiceTest {
         final String client = "GothGamerGhoul282";
 
         mockBuyDTO.setDescription(description);
+        mockBuyDTO.setClient(client);
 
         Mockito.when(mockBuyDAO.setBuy(description, client)).thenReturn(id);
 
@@ -56,12 +57,15 @@ public class BuyServiceTest {
         final String client = "GothGamerGhoul282";
 
         mockBuyDTO.setDescription(description);
+        mockBuyDTO.setClient(client);
+
         Buy buy = new Buy();
         buy.setDescription(description);
+        buy.setClient(client);
 
         Mockito.when(mockBuyDAO.getBuy(id)).thenReturn(buy);
-        Mockito.doNothing().when(mockBuyDAO).updateBuy(id, description, client);
 
         mockBuyService.update(id, mockBuyDTO);
+        verify(mockBuyDAO, times(1)).updateBuy(id, description, client);
     }
 }

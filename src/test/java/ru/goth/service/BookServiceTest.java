@@ -9,7 +9,7 @@ import ru.goth.entity.dto.BookDTO;
 import ru.goth.repository.BookDAO;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class BookServiceTest {
     private BookDAO mockBookDAO;
@@ -46,6 +46,10 @@ public class BookServiceTest {
         final int amount = 1;
 
         mockBookDTO.setTitle(title);
+        mockBookDTO.setAuthor(author);
+        mockBookDTO.setGenre(genre);
+        mockBookDTO.setPrice(price);
+        mockBookDTO.setAmount(amount);
 
         final int expected = 1;
         Mockito.when(mockBookDAO.setBook(title, author, genre, price, amount)).thenReturn(expected);
@@ -58,8 +62,6 @@ public class BookServiceTest {
     public void update() {
         final long id = 1L;
         final String title = "Occult encyclopedia";
-        mockBookDTO.setTitle(title);
-
         final Author author = new Author();
         author.setId(1L);
         author.setName(title);
@@ -67,11 +69,23 @@ public class BookServiceTest {
         final float price = 228.00F;
         final int amount = 1;
 
-        Mockito.when(mockBookDAO.getBook(id)).thenReturn(new Book());
-        Mockito.doNothing().when(mockBookDAO).updateBook(id, title, author, genre, price, amount);
+        mockBookDTO.setTitle(title);
+        mockBookDTO.setAuthor(author);
+        mockBookDTO.setGenre(genre);
+        mockBookDTO.setPrice(price);
+        mockBookDTO.setAmount(amount);
+
+        Book book = new Book();
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setGenre(genre);
+        book.setPrice(price);
+        book.setAmount(amount);
+
+        Mockito.when(mockBookDAO.getBook(id)).thenReturn(book);
 
         mockBookService.update(id, mockBookDTO);
-
+        verify(mockBookDAO, times(1)).updateBook(id, title, author, genre, price, amount);
     }
 
     @Test
@@ -80,8 +94,8 @@ public class BookServiceTest {
         final String title = "Occult encyclopedia";
         mockBookDTO.setTitle(title);
 
-        Mockito.doNothing().when(mockBookDAO).deleteBook(mockBookDTO.getTitle());
-
         mockBookService.deleteByDTO(mockBookDTO);
+
+        verify(mockBookDAO, times(1)).deleteBook(mockBookDTO.getTitle());
     }
 }
