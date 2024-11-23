@@ -15,12 +15,12 @@ import java.util.logging.Logger;
 @WebServlet(name = "getBuyBook", value = "/getBuyBook")
 public class GetBuyBook extends HttpServlet {
     private static final Logger logger = Logger.getLogger(GetBuyBook.class.getName());
-
     private final BuyBookService buyBookService;
 
     public GetBuyBook(BuyBookService buyBookService) {
         this.buyBookService = buyBookService;
     }
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
