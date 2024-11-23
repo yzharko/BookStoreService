@@ -1,4 +1,4 @@
-Простой REST сервис - BookStoreService (WIP*)
+Простой REST сервис - BookStoreService
 ===================
 Предметная область
 ------------------
@@ -18,10 +18,12 @@
 ![sql_scheme](https://github.com/user-attachments/assets/b34c5a8e-777c-4250-a306-dcf5c130dd9d)
 
 
- WIP*
+ Покрытие тестами
 ----------
-* 2/3 приложения, на данный момент, протестированы:
-  * Разбираюсь как именно подключать фековую БД для тестирования слоя DAO
+![test_coverage](https://github.com/user-attachments/assets/08660eab-55c8-4feb-8864-132450854fb4)
+![literally_me](https://github.com/user-attachments/assets/b4a71100-a34e-45b3-a3d4-0d23ff5b7907)
+
+![nice](https://github.com/user-attachments/assets/f9df91e8-d0fc-424c-887c-6389fa2e203b)
 
 Постановка задачи
 -----------------
