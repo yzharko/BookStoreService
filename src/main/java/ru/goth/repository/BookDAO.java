@@ -1,6 +1,5 @@
 package ru.goth.repository;
 
-import ru.goth.config.DataBaseConfig;
 import ru.goth.entity.Author;
 import ru.goth.entity.Book;
 
@@ -13,12 +12,19 @@ import java.util.logging.Logger;
 public class BookDAO {
     private static final Logger logger = Logger.getLogger(BookDAO.class.getName());
 
+    private final Connection connection;
+    private final AuthorDAO authorDAO;
+
+    public BookDAO(Connection connection, AuthorDAO authorDAO) {
+        this.connection = connection;
+        this.authorDAO = authorDAO;
+    }
+
     public Book getBook(long id) {
-        try (Connection connection = DataBaseConfig.getDataSource().getConnection();
-             PreparedStatement statement = connection.prepareStatement("\n" +
-                     "SELECT *\n" +
-                     "FROM public.book\n" +
-                     "WHERE book_id = ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("\n" +
+                "SELECT *\n" +
+                "FROM public.book\n" +
+                "WHERE book_id = ?")) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
 
@@ -31,7 +37,6 @@ public class BookDAO {
                 book.setPrice(resultSet.getFloat("price"));
                 book.setAmount(resultSet.getInt("amount"));
             }
-            AuthorDAO authorDAO = new AuthorDAO();
             author.setName(authorDAO.getAuthor(author.getId()).getName());
             book.setAuthor(author);
             return book;
@@ -40,12 +45,12 @@ public class BookDAO {
             return null;
         }
     }
+
     public int setBook(String title, Author author, String genre, float price, int amount) {
-        try (Connection connection = DataBaseConfig.getDataSource().getConnection();
-             PreparedStatement statement = connection.prepareStatement("\n" +
-                     "INSERT INTO public.book\n" +
-                     "(title, author_id, genre, price, amount)\n" +
-                     "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement("\n" +
+                "INSERT INTO public.book\n" +
+                "(title, author_id, genre, price, amount)\n" +
+                "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, title);
             statement.setLong(2, author.getId());
@@ -56,8 +61,7 @@ public class BookDAO {
 
             ResultSet resultSet = statement.getGeneratedKeys();
             int generatedId = 0;
-            if(resultSet.next())
-            {
+            if (resultSet.next()) {
                 generatedId = resultSet.getInt(1);
             }
             return generatedId;
@@ -66,12 +70,12 @@ public class BookDAO {
             return 0;
         }
     }
+
     public void updateBook(long id, String title, Author author, String genre, float price, int amount) {
-        try (Connection connection = DataBaseConfig.getDataSource().getConnection();
-             PreparedStatement statement = connection.prepareStatement("\n" +
-                     "UPDATE public.book\n" +
-                     "SET title = ?, author_id = ?, genre = ?, price = ?, amount = ?\n" +
-                     "WHERE book_id = ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("\n" +
+                "UPDATE public.book\n" +
+                "SET title = ?, author_id = ?, genre = ?, price = ?, amount = ?\n" +
+                "WHERE book_id = ?")) {
 
             statement.setString(1, title);
             statement.setLong(2, author.getId());
@@ -84,11 +88,11 @@ public class BookDAO {
             logger.info(e.getMessage());
         }
     }
+
     public void deleteBook(String title) {
-        try (Connection connection = DataBaseConfig.getDataSource().getConnection();
-             PreparedStatement statement = connection.prepareStatement("\n" +
-                     "DELETE FROM public.book \n" +
-                     "WHERE title = (?)")) {
+        try (PreparedStatement statement = connection.prepareStatement("\n" +
+                "DELETE FROM public.book \n" +
+                "WHERE title = (?)")) {
 
             statement.setString(1, title);
             statement.executeUpdate();
