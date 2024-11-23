@@ -1,13 +1,13 @@
 package ru.goth.config;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-class ConfigLoaderTest {
+public class ConfigLoaderTest {
 
     @Test
-    void getDriverName() {
+    public void getDriverName() {
         final String expected = "org.postgresql.Driver";
 
         ConfigLoader configLoader = new ConfigLoader();
@@ -17,7 +17,7 @@ class ConfigLoaderTest {
     }
 
     @Test
-    void getDbUrl() {
+    public void getDbUrl() {
         final String expected = "jdbc:postgresql://localhost:5432/book_store";
 
         ConfigLoader configLoader = new ConfigLoader();
@@ -27,8 +27,8 @@ class ConfigLoaderTest {
     }
 
     @Test
-    void getDbUsername() {
-        final String expected = "*INSERT_USERNAME_HERE";
+    public void getDbUsername() {
+        final String expected = "postgres";
 
         ConfigLoader configLoader = new ConfigLoader();
         String actual = configLoader.getDbUsername();
@@ -37,8 +37,8 @@ class ConfigLoaderTest {
     }
 
     @Test
-    void getDbPassword() {
-        final String expected = "*INSERT_PASS_HERE*";
+    public void getDbPassword() {
+        final String expected = "Bionicle871";
 
         ConfigLoader configLoader = new ConfigLoader();
         String actual = configLoader.getDbPassword();
