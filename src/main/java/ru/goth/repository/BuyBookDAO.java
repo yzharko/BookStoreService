@@ -76,10 +76,10 @@ public class BuyBookDAO {
                 "SET buy_id=?, book_id=?, amount=?\n" +
                 "WHERE buy_book_id = ?")) {
 
-            statement.setLong(1, buyBookId);
-            statement.setLong(2, buyId);
-            statement.setLong(3, bookId);
-            statement.setInt(4, amount);
+            statement.setLong(1, buyId);
+            statement.setLong(2, bookId);
+            statement.setInt(3, amount);
+            statement.setLong(4, buyBookId);
             statement.executeUpdate();
         } catch (Exception e) {
             logger.info(e.getMessage());
