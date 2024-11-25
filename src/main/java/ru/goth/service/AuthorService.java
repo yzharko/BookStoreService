@@ -10,7 +10,8 @@ public class AuthorService {
     private static final Logger logger = Logger.getLogger(AuthorService.class.getName());
     private AuthorDAO authorDAO;
 
-    public  AuthorService() {}
+    public AuthorService() {
+    }
 
     public AuthorService(AuthorDAO authorDAO) {
         this.authorDAO = authorDAO;
