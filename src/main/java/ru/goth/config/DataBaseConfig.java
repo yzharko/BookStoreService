@@ -9,7 +9,9 @@ public class DataBaseConfig {
     private DataBaseConfig() {
         throw new IllegalStateException("Utility class");
     }
+
     private static HikariDataSource dataSource;
+
     static {
         ConfigLoader configLoader = new ConfigLoader();
         HikariConfig config = new HikariConfig();
