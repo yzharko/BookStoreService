@@ -7,6 +7,8 @@ import ru.goth.entity.Author;
 import ru.goth.entity.dto.AuthorDTO;
 import ru.goth.repository.AuthorDAO;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -18,7 +20,11 @@ public class AuthorServiceTest {
     @Before
     public void setup() {
         mockAuthorDAO = mock(AuthorDAO.class);
-        mockAuthorService = new AuthorService(mockAuthorDAO);
+        try {
+            mockAuthorService = new AuthorService();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test

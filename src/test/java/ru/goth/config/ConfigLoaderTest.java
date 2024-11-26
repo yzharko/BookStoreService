@@ -28,7 +28,7 @@ public class ConfigLoaderTest {
 
     @Test
     public void getDbUsername() {
-        final String expected = "*INSERT_USERNAME_HERE";
+        final String expected = "postgres";
 
         ConfigLoader configLoader = new ConfigLoader();
         String actual = configLoader.getDbUsername();
@@ -38,7 +38,7 @@ public class ConfigLoaderTest {
 
     @Test
     public void getDbPassword() {
-        final String expected = "*INSERT_PASS_HERE*";
+        final String expected = "Bionicle871";
 
         ConfigLoader configLoader = new ConfigLoader();
         String actual = configLoader.getDbPassword();
