@@ -112,7 +112,6 @@ public class BuyBookDAOTest {
         assertEquals(description, buyBook.getBuy().getDescription());
         assertEquals(title, buyBook.getBook().getTitle());
     }
-
     @Test
     public void testUpdateBuyBook() {
         final String description = "Deliver only during night time";
@@ -139,7 +138,6 @@ public class BuyBookDAOTest {
 
         assertEquals(newAmount, buyBookDAO.getBuyBook(id).getAmount());
     }
-
     @Test
     public void testDeleteBuyBook() throws Exception {
         final String description = "Deliver only during night time";

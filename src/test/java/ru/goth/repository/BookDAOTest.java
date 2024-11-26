@@ -83,7 +83,6 @@ public class BookDAOTest {
 
         assertEquals(title, bookDAO.getBook(id).getTitle());
     }
-
     @Test
     public void testUpdateBook() {
         final String title = "Occult encyclopedia";
@@ -105,7 +104,6 @@ public class BookDAOTest {
         bookDAO.updateBook(id, newTitle, author, genre, price, amount);
         assertEquals(newTitle, bookDAO.getBook(id).getTitle());
     }
-
     @Test
     public void testDeleteBook() throws Exception {
         final String title = "Occult encyclopedia";
