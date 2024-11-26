@@ -21,7 +21,7 @@ public class GetAuthor extends HttpServlet {
     public GetAuthor() throws SQLException {
         this.authorService = new AuthorService();
     }
-
+// demonstration purposes comment
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
