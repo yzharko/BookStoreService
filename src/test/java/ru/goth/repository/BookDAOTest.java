@@ -35,7 +35,7 @@ public class BookDAOTest {
                 postgreSQLContainer.getPassword()
         );
 
-        authorDAO = new AuthorDAO(connection);
+        authorDAO = new AuthorDAO();
         bookDAO = new BookDAO(connection, authorDAO);
 
         try (PreparedStatement statement = connection.prepareStatement(
