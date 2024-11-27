@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 @WebServlet(name = "getBook", value = "/getBook")
@@ -18,8 +19,8 @@ public class GetBook extends HttpServlet {
 
     private final BookService bookService;
 
-    public GetBook(BookService bookService) {
-        this.bookService = bookService;
+    public GetBook() throws SQLException {
+        this.bookService = new BookService();
     }
 
     @Override

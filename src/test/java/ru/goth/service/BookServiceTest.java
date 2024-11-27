@@ -8,6 +8,8 @@ import ru.goth.entity.Book;
 import ru.goth.entity.dto.BookDTO;
 import ru.goth.repository.BookDAO;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -19,7 +21,11 @@ public class BookServiceTest {
     @Before
     public void setup() {
         mockBookDAO = mock(BookDAO.class);
-        mockBookService = new BookService(mockBookDAO);
+        try {
+            mockBookService = new BookService();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test

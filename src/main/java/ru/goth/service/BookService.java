@@ -5,17 +5,15 @@ import ru.goth.entity.Book;
 import ru.goth.entity.dto.BookDTO;
 import ru.goth.repository.BookDAO;
 
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class BookService {
     private static final Logger logger = Logger.getLogger(BookService.class.getName());
     private BookDAO bookDAO;
 
-    public BookService() {
-    }
-
-    public BookService(BookDAO bookDAO) {
-        this.bookDAO = bookDAO;
+    public BookService() throws SQLException {
+        this.bookDAO = new BookDAO();
     }
 
     public BookDTO getById(long id) {

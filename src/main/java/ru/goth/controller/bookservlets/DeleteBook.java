@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 @WebServlet(name = "deleteBook", value = "/deleteBook")
@@ -18,8 +19,8 @@ public class DeleteBook extends HttpServlet {
 
     private final BookService bookService;
 
-    public DeleteBook(BookService bookService) {
-        this.bookService = bookService;
+    public DeleteBook() throws SQLException {
+        this.bookService = new BookService();
     }
 
     @Override

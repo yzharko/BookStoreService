@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 @WebServlet(name = "setAuthor", value = "/setAuthor")
@@ -17,8 +18,8 @@ public class SetAuthor extends HttpServlet {
     private static final Logger logger = Logger.getLogger(SetAuthor.class.getName());
     private final AuthorService authorService;
 
-    public SetAuthor(AuthorService authorService) {
-        this.authorService = authorService;
+    public SetAuthor() throws SQLException {
+        this.authorService  = new AuthorService();;
     }
 
     @Override

@@ -1,12 +1,10 @@
 package ru.goth.repository;
 
+import ru.goth.config.DataBaseConfig;
 import ru.goth.entity.Author;
 import ru.goth.entity.Book;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.logging.Logger;
 
 public class BookDAO {
@@ -15,9 +13,9 @@ public class BookDAO {
     private final Connection connection;
     private final AuthorDAO authorDAO;
 
-    public BookDAO(Connection connection, AuthorDAO authorDAO) {
-        this.connection = connection;
-        this.authorDAO = authorDAO;
+    public BookDAO() throws SQLException {
+        this.connection = DataBaseConfig.getDataSource().getConnection();
+        this.authorDAO = new AuthorDAO();
     }
 
     public Book getBook(long id) {

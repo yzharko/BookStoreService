@@ -7,6 +7,8 @@ import ru.goth.entity.Buy;
 import ru.goth.entity.dto.BuyDTO;
 import ru.goth.repository.BuyDAO;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -16,9 +18,9 @@ public class BuyServiceTest {
     private final BuyDTO mockBuyDTO = new BuyDTO();
 
     @Before
-    public void setup() {
+    public void setup() throws SQLException {
         mockBuyDAO = mock(BuyDAO.class);
-        mockBuyService = new BuyService(mockBuyDAO);
+        mockBuyService = new BuyService();
     }
 
     @Test

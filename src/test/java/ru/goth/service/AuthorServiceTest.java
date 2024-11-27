@@ -20,7 +20,11 @@ public class AuthorServiceTest {
     @Before
     public void setup() {
         mockAuthorDAO = mock(AuthorDAO.class);
-            mockAuthorService = new AuthorService(mockAuthorDAO);
+        try {
+            mockAuthorService = new AuthorService();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
