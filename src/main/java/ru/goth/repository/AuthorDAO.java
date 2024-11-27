@@ -18,6 +18,10 @@ public class AuthorDAO {
         this.connection = DataBaseConfig.getDataSource().getConnection();
     }
 
+    public AuthorDAO(Connection connection) {
+        this.connection = connection;
+    }
+
     public Author getAuthor(long id) {
         try (PreparedStatement statement = connection.prepareStatement("SELECT author_id, name_author\n" +
                 "FROM public.author\n" +

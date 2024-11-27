@@ -15,6 +15,10 @@ public class BuyDAO {
         this.connection = DataBaseConfig.getDataSource().getConnection();
     }
 
+    public BuyDAO(Connection connection) {
+        this.connection = connection;
+    }
+
     public Buy getBuy(long id) {
         try (PreparedStatement statement = connection.prepareStatement("SELECT buy_description, client\n" +
                 "FROM public.buy\n" +

@@ -25,6 +25,10 @@ public class PutBuyBook extends HttpServlet {
         this.buyBookService = new BuyBookService();
     }
 
+    public PutBuyBook(BuyBookService buyBookService) {
+        this.buyBookService = buyBookService;
+    }
+
     @Override
     public void doPut(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");

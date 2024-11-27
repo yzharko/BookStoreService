@@ -23,6 +23,10 @@ public class DeleteBook extends HttpServlet {
         this.bookService = new BookService();
     }
 
+    public DeleteBook(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");

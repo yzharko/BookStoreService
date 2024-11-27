@@ -23,6 +23,10 @@ public class GetBook extends HttpServlet {
         this.bookService = new BookService();
     }
 
+    public GetBook(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");

@@ -22,6 +22,10 @@ public class GetBuyBook extends HttpServlet {
         this.buyBookService = new BuyBookService();
     }
 
+    public GetBuyBook(BuyBookService buyBookService) {
+        this.buyBookService = buyBookService;
+    }
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");

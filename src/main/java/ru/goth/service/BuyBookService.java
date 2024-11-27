@@ -16,6 +16,7 @@ public class BuyBookService {
     private final BuyService buyService;
 
     public BuyBookService() throws SQLException {
+        this.buyBookDAO = new BuyBookDAO();
         this.bookService = new BookService();
         this.buyService = new BuyService();
     }

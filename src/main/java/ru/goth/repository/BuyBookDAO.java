@@ -23,6 +23,12 @@ public class BuyBookDAO {
         this.buyDAO = new BuyDAO();
     }
 
+    public BuyBookDAO(Connection connection, BookDAO bookDAO, BuyDAO buyDAO) {
+        this.connection = connection;
+        this.bookDAO = bookDAO;
+        this.buyDAO = buyDAO;
+    }
+
     private static final Logger logger = Logger.getLogger(BuyBookDAO.class.getName());
 
     public BuyBook getBuyBook(long id) {

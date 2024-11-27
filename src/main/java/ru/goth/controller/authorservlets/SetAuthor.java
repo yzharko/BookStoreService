@@ -19,7 +19,11 @@ public class SetAuthor extends HttpServlet {
     private final AuthorService authorService;
 
     public SetAuthor() throws SQLException {
-        this.authorService  = new AuthorService();;
+        this.authorService = new AuthorService();
+    }
+
+    public SetAuthor(AuthorService authorService) {
+        this.authorService = authorService;
     }
 
     @Override

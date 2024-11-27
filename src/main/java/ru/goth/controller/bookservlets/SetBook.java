@@ -24,6 +24,10 @@ public class SetBook extends HttpServlet {
         this.bookService = new BookService();
     }
 
+    public SetBook(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");

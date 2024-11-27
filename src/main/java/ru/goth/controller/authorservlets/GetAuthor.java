@@ -22,6 +22,10 @@ public class GetAuthor extends HttpServlet {
         this.authorService = new AuthorService();
     }
 
+    public GetAuthor(AuthorService authorService) {
+        this.authorService = authorService;
+    }
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");

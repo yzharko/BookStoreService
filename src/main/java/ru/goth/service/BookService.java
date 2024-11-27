@@ -16,6 +16,10 @@ public class BookService {
         this.bookDAO = new BookDAO();
     }
 
+    public BookService(BookDAO bookDAO) {
+        this.bookDAO = bookDAO;
+    }
+
     public BookDTO getById(long id) {
         Book book = bookDAO.getBook(id);
 

@@ -15,6 +15,10 @@ public class BuyService {
         this.buyDAO = new BuyDAO();
     }
 
+    BuyService(BuyDAO buyDAO) {
+        this.buyDAO = buyDAO;
+    }
+
     public BuyDTO getById(long id) {
         Buy buy = buyDAO.getBuy(id);
 

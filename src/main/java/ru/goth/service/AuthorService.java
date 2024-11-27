@@ -15,6 +15,10 @@ public class AuthorService {
         this.authorDAO = new AuthorDAO();
     }
 
+    public AuthorService(AuthorDAO authorDAO) {
+        this.authorDAO = authorDAO;
+    }
+
     public AuthorDTO getById(long id) {
         Author author = authorDAO.getAuthor(id);
 

@@ -22,6 +22,10 @@ public class DeleteAuthor extends HttpServlet {
         this.authorService = new AuthorService();
     }
 
+    public DeleteAuthor(AuthorService authorService) {
+        this.authorService = authorService;
+    }
+
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");

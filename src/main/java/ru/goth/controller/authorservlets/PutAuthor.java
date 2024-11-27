@@ -19,7 +19,11 @@ public class PutAuthor extends HttpServlet {
     private final AuthorService authorService;
 
     public PutAuthor() throws SQLException {
-        this.authorService =  new AuthorService();
+        this.authorService = new AuthorService();
+    }
+
+    public PutAuthor(AuthorService authorService) {
+        this.authorService = authorService;
     }
 
     @Override

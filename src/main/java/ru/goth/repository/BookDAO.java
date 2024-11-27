@@ -18,6 +18,11 @@ public class BookDAO {
         this.authorDAO = new AuthorDAO();
     }
 
+    public BookDAO(Connection connection, AuthorDAO authorDAO) {
+        this.connection = connection;
+        this.authorDAO = authorDAO;
+    }
+
     public Book getBook(long id) {
         try (PreparedStatement statement = connection.prepareStatement("\n" +
                 "SELECT *\n" +
