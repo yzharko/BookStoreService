@@ -35,8 +35,8 @@ public class BookDAOTest {
                 postgreSQLContainer.getPassword()
         );
 
-        authorDAO = new AuthorDAO();
-        bookDAO = new BookDAO();
+        authorDAO = new AuthorDAO(connection);
+        bookDAO = new BookDAO(connection, authorDAO);
 
         try (PreparedStatement statement = connection.prepareStatement(
                 "CREATE TABLE author (\n" +

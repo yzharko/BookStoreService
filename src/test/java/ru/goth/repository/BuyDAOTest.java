@@ -31,7 +31,7 @@ public class BuyDAOTest {
                 postgreSQLContainer.getPassword()
         );
 
-        buyDAO = new BuyDAO();
+        buyDAO = new BuyDAO(connection);
 
         try (PreparedStatement statement = connection.prepareStatement(
                 "CREATE TABLE buy(\n" +

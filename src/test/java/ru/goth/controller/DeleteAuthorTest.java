@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -32,11 +31,7 @@ public class DeleteAuthorTest {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         requestDispatcher = mock(RequestDispatcher.class);
-        try {
-            deleteAuthor = new DeleteAuthor();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        deleteAuthor = new DeleteAuthor(mockAuthorService);
     }
 
     @Test
