@@ -10,12 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 @WebServlet(name = "deleteAuthor", value = "/deleteAuthor")
 public class DeleteAuthor extends HttpServlet {
     private static final Logger logger = Logger.getLogger(DeleteAuthor.class.getName());
     private final AuthorService authorService;
+
+    public DeleteAuthor() throws SQLException {
+        this.authorService = new AuthorService();
+    }
 
     public DeleteAuthor(AuthorService authorService) {
         this.authorService = authorService;

@@ -13,12 +13,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 @WebServlet(name = "setBuyBook", value = "/setBuyBook")
 public class SetBuyBook extends HttpServlet {
     private static final Logger logger = Logger.getLogger(SetBuyBook.class.getName());
     private final BuyBookService buyBookService;
+
+    public SetBuyBook() throws SQLException {
+        this.buyBookService = new BuyBookService();
+    }
 
     public SetBuyBook(BuyBookService buyBookService) {
         this.buyBookService = buyBookService;

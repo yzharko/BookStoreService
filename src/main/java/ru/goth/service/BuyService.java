@@ -4,13 +4,15 @@ import ru.goth.entity.Buy;
 import ru.goth.entity.dto.BuyDTO;
 import ru.goth.repository.BuyDAO;
 
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class BuyService {
     private static final Logger logger = Logger.getLogger(BuyService.class.getName());
     private BuyDAO buyDAO;
 
-    BuyService() {
+    BuyService() throws SQLException {
+        this.buyDAO = new BuyDAO();
     }
 
     BuyService(BuyDAO buyDAO) {

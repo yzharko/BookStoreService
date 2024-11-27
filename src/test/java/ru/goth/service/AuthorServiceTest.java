@@ -20,7 +20,7 @@ public class AuthorServiceTest {
     @Before
     public void setup() {
         mockAuthorDAO = mock(AuthorDAO.class);
-            mockAuthorService = new AuthorService(mockAuthorDAO);
+        mockAuthorService = new AuthorService(mockAuthorDAO);
     }
 
     @Test

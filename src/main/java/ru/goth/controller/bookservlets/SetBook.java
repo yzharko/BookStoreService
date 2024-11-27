@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 @WebServlet(name = "setBook", value = "/setBook")
@@ -18,6 +19,10 @@ public class SetBook extends HttpServlet {
     private static final Logger logger = Logger.getLogger(SetBook.class.getName());
 
     private final BookService bookService;
+
+    public SetBook() throws SQLException {
+        this.bookService = new BookService();
+    }
 
     public SetBook(BookService bookService) {
         this.bookService = bookService;

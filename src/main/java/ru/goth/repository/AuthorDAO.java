@@ -1,16 +1,22 @@
 package ru.goth.repository;
 
+import ru.goth.config.DataBaseConfig;
 import ru.goth.entity.Author;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class AuthorDAO {
     private static final Logger logger = Logger.getLogger(AuthorDAO.class.getName());
 
     private final Connection connection;
+
+    public AuthorDAO() throws SQLException {
+        this.connection = DataBaseConfig.getDataSource().getConnection();
+    }
 
     public AuthorDAO(Connection connection) {
         this.connection = connection;

@@ -6,6 +6,7 @@ import ru.goth.entity.dto.BuyBookDTO;
 import ru.goth.entity.dto.BuyDTO;
 import ru.goth.repository.BuyBookDAO;
 
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class BuyBookService {
@@ -14,9 +15,10 @@ public class BuyBookService {
     private final BookService bookService;
     private final BuyService buyService;
 
-    public BuyBookService(BookService bookService, BuyService buyService) {
-        this.bookService = bookService;
-        this.buyService = buyService;
+    public BuyBookService() throws SQLException {
+        this.buyBookDAO = new BuyBookDAO();
+        this.bookService = new BookService();
+        this.buyService = new BuyService();
     }
 
     public BuyBookService(BuyBookDAO buyBookDAO, BookService bookService, BuyService buyService) {
