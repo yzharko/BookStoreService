@@ -38,7 +38,7 @@ public class BuyBookDAOTest {
                 postgreSQLContainer.getPassword()
         );
 
-        authorDAO = new AuthorDAO();
+        authorDAO = new AuthorDAO(connection);
         bookDAO = new BookDAO(connection, authorDAO);
         buyDAO = new BuyDAO(connection);
         buyBookDAO = new BuyBookDAO(connection, bookDAO, buyDAO);
