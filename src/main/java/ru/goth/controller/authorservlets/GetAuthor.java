@@ -1,15 +1,13 @@
 package ru.goth.controller.authorservlets;
 
+import ru.goth.controller.JsonConvertor;
 import ru.goth.entity.dto.AuthorDTO;
 import ru.goth.service.AuthorService;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
@@ -35,16 +33,11 @@ public class GetAuthor extends HttpServlet {
 
             AuthorDTO authorDTO = authorService.getById(id);
 
-            request.setAttribute("author", authorDTO);
+            JsonConvertor <AuthorDTO> jsonConvertor = new JsonConvertor<>();
+            jsonConvertor.convertToJson(response, authorDTO);
         } catch (Exception e) {
             logger.info(e.getMessage());
         }
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/authorGetRes.jsp");
-        try {
-            requestDispatcher.forward(request, response);
-        } catch (ServletException | IOException e) {
-            logger.info(e.getMessage());
-        }
     }
 }

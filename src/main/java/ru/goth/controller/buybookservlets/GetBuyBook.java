@@ -1,15 +1,13 @@
 package ru.goth.controller.buybookservlets;
 
+import ru.goth.controller.JsonConvertor;
 import ru.goth.entity.dto.BuyBookDTO;
 import ru.goth.service.BuyBookService;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
@@ -35,15 +33,9 @@ public class GetBuyBook extends HttpServlet {
 
             BuyBookDTO buyBookDTO = buyBookService.getById(id);
 
-            request.setAttribute("buyBook", buyBookDTO);
+            JsonConvertor<BuyBookDTO> jsonConvertor = new JsonConvertor<>();
+            jsonConvertor.convertToJson(response, buyBookDTO);
         } catch (Exception e) {
-            logger.info(e.getMessage());
-        }
-
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/buyBookGetRes.jsp");
-        try {
-            requestDispatcher.forward(request, response);
-        } catch (ServletException | IOException e) {
             logger.info(e.getMessage());
         }
     }

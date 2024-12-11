@@ -1,15 +1,13 @@
 package ru.goth.controller.bookservlets;
 
+import ru.goth.controller.JsonConvertor;
 import ru.goth.entity.dto.BookDTO;
 import ru.goth.service.BookService;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
@@ -36,15 +34,9 @@ public class GetBook extends HttpServlet {
 
             BookDTO bookDTO = bookService.getById(id);
 
-            request.setAttribute("book", bookDTO);
+            JsonConvertor<BookDTO> jsonConvertor = new JsonConvertor<>();
+            jsonConvertor.convertToJson(response, bookDTO);
         } catch (Exception e) {
-            logger.info(e.getMessage());
-        }
-
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/bookGetRes.jsp");
-        try {
-            requestDispatcher.forward(request, response);
-        } catch (ServletException | IOException e) {
             logger.info(e.getMessage());
         }
     }
