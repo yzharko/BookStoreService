@@ -72,7 +72,7 @@ public class BookTest {
         Author author = new Author();
         book.setAuthor(author);
 
-        final String expected = "Book{id=0, title='null', author=Author{id=0, name='null'}, genre='null', price=0.0, amount=0, buyBooks=null}";
+        final String expected = "Book{id=0, title='null', author=Author{id=0, name='null'}, genre='null', price=0.0, amount=0}";
         String actual = book.toString();
         assertEquals(expected, actual);
     }
