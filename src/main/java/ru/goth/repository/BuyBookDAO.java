@@ -1,5 +1,6 @@
 package ru.goth.repository;
 
+import ru.goth.config.DataBaseConfig;
 import ru.goth.entity.Book;
 import ru.goth.entity.Buy;
 import ru.goth.entity.BuyBook;
@@ -7,6 +8,7 @@ import ru.goth.entity.BuyBook;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class BuyBookDAO {
@@ -14,6 +16,12 @@ public class BuyBookDAO {
     private final Connection connection;
     private final BookDAO bookDAO;
     private final BuyDAO buyDAO;
+
+    public BuyBookDAO() throws SQLException {
+        this.connection = DataBaseConfig.getDataSource().getConnection();
+        this.bookDAO = new BookDAO();
+        this.buyDAO = new BuyDAO();
+    }
 
     public BuyBookDAO(Connection connection, BookDAO bookDAO, BuyDAO buyDAO) {
         this.connection = connection;

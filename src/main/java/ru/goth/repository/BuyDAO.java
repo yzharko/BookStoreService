@@ -1,17 +1,19 @@
 package ru.goth.repository;
 
+import ru.goth.config.DataBaseConfig;
 import ru.goth.entity.Buy;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.logging.Logger;
 
 public class BuyDAO {
     private static final Logger logger = Logger.getLogger(BuyDAO.class.getName());
 
     private final Connection connection;
+
+    public BuyDAO() throws SQLException {
+        this.connection = DataBaseConfig.getDataSource().getConnection();
+    }
 
     public BuyDAO(Connection connection) {
         this.connection = connection;

@@ -10,12 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 @WebServlet(name = "updateAuthor", value = "/updateAuthor")
 public class PutAuthor extends HttpServlet {
     private static final Logger logger = Logger.getLogger(PutAuthor.class.getName());
     private final AuthorService authorService;
+
+    public PutAuthor() throws SQLException {
+        this.authorService = new AuthorService();
+    }
 
     public PutAuthor(AuthorService authorService) {
         this.authorService = authorService;

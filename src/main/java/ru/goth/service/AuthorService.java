@@ -4,13 +4,15 @@ import ru.goth.entity.Author;
 import ru.goth.entity.dto.AuthorDTO;
 import ru.goth.repository.AuthorDAO;
 
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class AuthorService {
     private static final Logger logger = Logger.getLogger(AuthorService.class.getName());
-    private AuthorDAO authorDAO;
+    private final AuthorDAO authorDAO;
 
-    public AuthorService() {
+    public AuthorService() throws SQLException {
+        this.authorDAO = new AuthorDAO();
     }
 
     public AuthorService(AuthorDAO authorDAO) {
