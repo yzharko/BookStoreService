@@ -1,26 +1,12 @@
 package ru.goth.entity;
 
-import javax.persistence.*;
-import java.util.List;
-
-@Entity
 public class Book {
-    @Id
-    @Column(name = "book_id")
     private long id;
-    @Column(name = "title")
     private String title;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "OWNER_ID")
     private Author author;
-    @Column(name = "genre")
     private String genre;
-    @Column(name = "price")
     private float price;
-    @Column(name = "amount")
     private int amount;
-    @OneToMany(mappedBy = "book_id", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List <BuyBook> buyBooks;
 
     public long getId() {
         return id;
@@ -79,7 +65,6 @@ public class Book {
                 ", genre='" + genre + '\'' +
                 ", price=" + price +
                 ", amount=" + amount +
-                ", buyBooks=" + buyBooks +
                 '}';
     }
 }

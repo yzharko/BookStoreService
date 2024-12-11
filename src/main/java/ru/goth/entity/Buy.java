@@ -1,19 +1,9 @@
 package ru.goth.entity;
 
-import javax.persistence.*;
-import java.util.List;
-
-@Entity
 public class Buy {
-    @Id
-    @Column(name = "buy_id")
     private long id;
-    @Column(name = "buy_description")
     private String description;
-    @Column(name = "client")
     private String client;
-    @OneToMany(mappedBy = "buy_id", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List <BuyBook> buyBooks;
 
     public long getId() {
         return id;

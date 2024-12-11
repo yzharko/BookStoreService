@@ -1,17 +1,8 @@
 package ru.goth.entity;
 
-import javax.persistence.*;
-import java.util.List;
-
-@Entity
 public class Author {
-    @Id
-    @Column(name = "author_id")
     private long id;
-    @Column(name = "name_author")
     private String name;
-    @OneToMany(mappedBy = "author_id", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List <Book> books;
 
     public Author() {}
     public Author(String name) {
