@@ -1,106 +1,60 @@
 package ru.goth.repository;
 
-import ru.goth.config.DataBaseConfig;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.stereotype.Repository;
 import ru.goth.entity.Author;
 import ru.goth.entity.Book;
+import ru.goth.repository.rowmapper.BookRowMapper;
 
-import java.sql.*;
-import java.util.logging.Logger;
-
+@Repository
 public class BookDAO {
-    private static final Logger logger = Logger.getLogger(BookDAO.class.getName());
 
-    private final Connection connection;
-    private final AuthorDAO authorDAO;
+    private final NamedParameterJdbcTemplate template;
 
-    public BookDAO() throws SQLException {
-        this.connection = DataBaseConfig.getDataSource().getConnection();
-        this.authorDAO = new AuthorDAO();
-    }
-
-    public BookDAO(Connection connection, AuthorDAO authorDAO) {
-        this.connection = connection;
-        this.authorDAO = authorDAO;
+    public BookDAO(NamedParameterJdbcTemplate template) {
+        this.template = template;
     }
 
     public Book getBook(long id) {
-        try (PreparedStatement statement = connection.prepareStatement("\n" +
-                "SELECT *\n" +
+        String sql = "SELECT *\n" +
                 "FROM public.book\n" +
-                "WHERE book_id = ?")) {
-            statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
-
-            Book book = new Book();
-            Author author = new Author();
-            while (resultSet.next()) {
-                book.setTitle(resultSet.getString("title"));
-                author.setId(resultSet.getLong("author_id"));
-                book.setGenre(resultSet.getString("genre"));
-                book.setPrice(resultSet.getFloat("price"));
-                book.setAmount(resultSet.getInt("amount"));
-            }
-            author.setName(authorDAO.getAuthor(author.getId()).getName());
-            book.setAuthor(author);
-            return book;
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            return null;
-        }
+                "WHERE book_id = :id";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
+        return template.queryForObject(sql, parameterSource, new BookRowMapper());
     }
 
     public int setBook(String title, Author author, String genre, float price, int amount) {
-        try (PreparedStatement statement = connection.prepareStatement("\n" +
-                "INSERT INTO public.book\n" +
+        String sql = "INSERT INTO public.book\n" +
                 "(title, author_id, genre, price, amount)\n" +
-                "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
-
-            statement.setString(1, title);
-            statement.setLong(2, author.getId());
-            statement.setString(3, genre);
-            statement.setFloat(4, price);
-            statement.setInt(5, amount);
-            statement.executeUpdate();
-
-            ResultSet resultSet = statement.getGeneratedKeys();
-            int generatedId = 0;
-            if (resultSet.next()) {
-                generatedId = resultSet.getInt(1);
-            }
-            return generatedId;
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            return 0;
-        }
+                "VALUES (:title, :authorId, :genre, :price, :amount) RETURNING ID";
+        SqlParameterSource parameterSource = new MapSqlParameterSource()
+                .addValue("title", title)
+                .addValue("authorId", author.getId())
+                .addValue("genre", genre)
+                .addValue("price", price)
+                .addValue("amount", amount);
+        return template.queryForObject(sql, parameterSource, Integer.class);
     }
 
     public void updateBook(long id, String title, Author author, String genre, float price, int amount) {
-        try (PreparedStatement statement = connection.prepareStatement("\n" +
-                "UPDATE public.book\n" +
-                "SET title = ?, author_id = ?, genre = ?, price = ?, amount = ?\n" +
-                "WHERE book_id = ?")) {
-
-            statement.setString(1, title);
-            statement.setLong(2, author.getId());
-            statement.setString(3, genre);
-            statement.setFloat(4, price);
-            statement.setInt(5, amount);
-            statement.setLong(6, id);
-            statement.executeUpdate();
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-        }
+        String sql = "UPDATE public.book\n" +
+                "SET title = :title, author_id = :authorId, genre = :genre, price = :price, amount = :amount\n" +
+                "WHERE book_id = :id";
+        SqlParameterSource parameterSource = new MapSqlParameterSource()
+                .addValue("title", title)
+                .addValue("authorId", author.getId())
+                .addValue("genre", genre)
+                .addValue("price", price)
+                .addValue("amount", amount);
+        template.update(sql, parameterSource);
     }
 
     public void deleteBook(String title) {
-        try (PreparedStatement statement = connection.prepareStatement("\n" +
-                "DELETE FROM public.book \n" +
-                "WHERE title = (?)")) {
-
-            statement.setString(1, title);
-            statement.executeUpdate();
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-        }
+        String sql = "DELETE FROM public.book \n" +
+                "WHERE title = :title";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("title", title);
+        template.update(sql, parameterSource);
     }
 }

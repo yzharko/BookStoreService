@@ -1,80 +1,49 @@
 package ru.goth.repository;
 
-import ru.goth.config.DataBaseConfig;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.stereotype.Repository;
 import ru.goth.entity.Author;
+import ru.goth.repository.rowmapper.AuthorRowMapper;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Logger;
-
+@Repository
 public class AuthorDAO {
-    private static final Logger logger = Logger.getLogger(AuthorDAO.class.getName());
+    private final NamedParameterJdbcTemplate template;
 
-    private final Connection connection;
-
-    public AuthorDAO() throws SQLException {
-        this.connection = DataBaseConfig.getDataSource().getConnection();
-    }
-
-    public AuthorDAO(Connection connection) {
-        this.connection = connection;
+    public AuthorDAO(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.template = namedParameterJdbcTemplate;
     }
 
     public Author getAuthor(long id) {
-        try (PreparedStatement statement = connection.prepareStatement("SELECT author_id, name_author\n" +
+        String sql = "SELECT author_id, name_author\n" +
                 "FROM public.author\n" +
-                "WHERE author_id = ?")) {
-            statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
-
-            Author author = new Author();
-            while (resultSet.next()) {
-                author.setName(resultSet.getString("name_author"));
-            }
-            return author;
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            return null;
-        }
+                "WHERE author_id = :id";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
+        return template.queryForObject(sql, parameterSource, new AuthorRowMapper());
     }
 
     public void setAuthor(String name) {
-        try (PreparedStatement statement = connection.prepareStatement("\n" +
-                "INSERT INTO public.author \n" +
-                "(name_author) VALUES (?)")) {
-
-            statement.setString(1, name);
-            statement.executeUpdate();
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-        }
+        String sql = "INSERT INTO public.author \n" +
+                "(name_author) VALUES (:name)";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("name", name);
+        template.update(sql, parameterSource);
     }
 
     public void updateAuthor(long id, String name) {
-        try (PreparedStatement statement = connection.prepareStatement("\n" +
-                "UPDATE public.author\n" +
-                "SET name_author = (?)\n" +
-                "WHERE author_id = ?")) {
-
-            statement.setString(1, name);
-            statement.setLong(2, id);
-            statement.executeUpdate();
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-        }
+        String sql = "UPDATE public.author\n" +
+                "SET name_author = :name\n" +
+                "WHERE author_id = :id";
+        SqlParameterSource parameterSource = new MapSqlParameterSource()
+                .addValue("name", name)
+                .addValue("id", id);
+        template.update(sql, parameterSource);
     }
 
     public void deleteAuthor(String name) {
-        try (PreparedStatement statement = connection.prepareStatement("\n" +
-                "DELETE FROM public.author \n" +
-                "WHERE name_author = (?)")) {
-
-            statement.setString(1, name);
-            statement.executeUpdate();
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-        }
+        String sql = "DELETE FROM public.author \n" +
+                "WHERE name_author = :name";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("name", name);
+        template.update(sql, parameterSource);
     }
 }

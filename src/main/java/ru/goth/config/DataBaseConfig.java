@@ -2,17 +2,17 @@ package ru.goth.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
 
+@Configuration
 public class DataBaseConfig {
-    private DataBaseConfig() {
-        throw new IllegalStateException("Utility class");
-    }
 
-    private static HikariDataSource dataSource;
-
-    static {
+    @Bean
+    public DataSource dataSource() {
         ConfigLoader configLoader = new ConfigLoader();
         HikariConfig config = new HikariConfig();
         config.setDriverClassName(configLoader.getDriverName());
@@ -20,10 +20,13 @@ public class DataBaseConfig {
         config.setUsername(configLoader.getDbUsername());
         config.setPassword(configLoader.getDbPassword());
 
+        HikariDataSource dataSource;
         dataSource = new HikariDataSource(config);
+        return dataSource;
     }
 
-    public static DataSource getDataSource() {
-        return dataSource;
+    @Bean
+    public NamedParameterJdbcTemplate template(DataSource dataSource) {
+        return new NamedParameterJdbcTemplate(dataSource);
     }
 }
