@@ -5,6 +5,7 @@ import ru.goth.entity.dto.BuyBookDTO;
 import ru.goth.service.BuyBookService;
 
 @RestController
+@RequestMapping("/buyBook")
 public class BuyBookController {
     private BuyBookService buyBookService;
 
@@ -13,18 +14,18 @@ public class BuyBookController {
     }
 
     @GetMapping
-    public void getBuyBook(@RequestParam long id) {
-        buyBookService.getById(id);
+    public BuyBookDTO getBuyBook(@RequestParam long id) {
+        return buyBookService.getById(id);
     }
 
-    @PatchMapping
+    @PostMapping
     public void createBuyBook(@RequestBody BuyBookDTO buyBookDTO) {
-        //TODO: figure out 01
+        buyBookService.setByDTO(buyBookDTO);
     }
 
     @PutMapping
     public void updateBuyBook(@RequestParam long id, @RequestBody BuyBookDTO buyBookDTO) {
-        //TODO: figure out 02
+        buyBookService.update(id, buyBookDTO);
     }
 
     @DeleteMapping

@@ -5,8 +5,9 @@ import ru.goth.entity.dto.BookDTO;
 import ru.goth.service.BookService;
 
 @RestController
+@RequestMapping("/book")
 public class BookController {
-    private BookService bookService;
+    private final BookService bookService;
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
@@ -17,7 +18,7 @@ public class BookController {
         bookService.getById(id);
     }
 
-    @PatchMapping
+    @PostMapping
     public void createBook(@RequestBody BookDTO bookDTO) {
         bookService.setByDTO(bookDTO);
     }

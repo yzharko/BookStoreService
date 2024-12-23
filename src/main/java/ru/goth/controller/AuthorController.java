@@ -5,19 +5,20 @@ import ru.goth.entity.dto.AuthorDTO;
 import ru.goth.service.AuthorService;
 
 @RestController
+@RequestMapping("/author")
 public class AuthorController {
-    private AuthorService authorService;
+    private final AuthorService authorService;
 
     public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
 
     @GetMapping
-    public void getAuthor(@RequestParam long id) {
-        authorService.getById(id);
+    public AuthorDTO getAuthor(@RequestParam long id) {
+        return authorService.getById(id);
     }
 
-    @PatchMapping
+    @PostMapping
     public void createAuthor(@RequestBody AuthorDTO authorDTO) {
         authorService.setByDTO(authorDTO);
     }
