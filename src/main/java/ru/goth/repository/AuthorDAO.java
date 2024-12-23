@@ -11,8 +11,8 @@ import ru.goth.repository.rowmapper.AuthorRowMapper;
 public class AuthorDAO {
     private final NamedParameterJdbcTemplate template;
 
-    public AuthorDAO(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.template = namedParameterJdbcTemplate;
+    public AuthorDAO(NamedParameterJdbcTemplate template) {
+        this.template = template;
     }
 
     public Author getAuthor(long id) {
@@ -23,11 +23,12 @@ public class AuthorDAO {
         return template.queryForObject(sql, parameterSource, new AuthorRowMapper());
     }
 
-    public void setAuthor(String name) {
+    public long setAuthor(String name) {
         String sql = "INSERT INTO public.author \n" +
-                "(name_author) VALUES (:name)";
+                "(name_author) VALUES (:name) RETURNING ID";
+
         SqlParameterSource parameterSource = new MapSqlParameterSource("name", name);
-        template.update(sql, parameterSource);
+        return template.queryForObject(sql, parameterSource, Long.class);
     }
 
     public void updateAuthor(long id, String name) {

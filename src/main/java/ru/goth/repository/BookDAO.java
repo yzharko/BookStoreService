@@ -12,9 +12,11 @@ import ru.goth.repository.rowmapper.BookRowMapper;
 public class BookDAO {
 
     private final NamedParameterJdbcTemplate template;
+    private AuthorDAO authorDAO;
 
-    public BookDAO(NamedParameterJdbcTemplate template) {
+    public BookDAO(NamedParameterJdbcTemplate template, AuthorDAO authorDAO) {
         this.template = template;
+        this.authorDAO = authorDAO;
     }
 
     public Book getBook(long id) {
@@ -22,10 +24,13 @@ public class BookDAO {
                 "FROM public.book\n" +
                 "WHERE book_id = :id";
         SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
-        return template.queryForObject(sql, parameterSource, new BookRowMapper());
+        Book book = template.queryForObject(sql, parameterSource, new BookRowMapper());
+
+        book.setAuthor(authorDAO.getAuthor(book.getAuthor().getId()));
+        return book;
     }
 
-    public int setBook(String title, Author author, String genre, float price, int amount) {
+    public long setBook(String title, Author author, String genre, float price, int amount) {
         String sql = "INSERT INTO public.book\n" +
                 "(title, author_id, genre, price, amount)\n" +
                 "VALUES (:title, :authorId, :genre, :price, :amount) RETURNING ID";
@@ -35,7 +40,7 @@ public class BookDAO {
                 .addValue("genre", genre)
                 .addValue("price", price)
                 .addValue("amount", amount);
-        return template.queryForObject(sql, parameterSource, Integer.class);
+        return template.queryForObject(sql, parameterSource, Long.class);
     }
 
     public void updateBook(long id, String title, Author author, String genre, float price, int amount) {

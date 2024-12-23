@@ -16,20 +16,20 @@ public class BuyDAO {
     }
 
     public Buy getBuy(long id) {
-        String sql = "SELECT buy_description, client\n" +
+        String sql = "SELECT buy_id, buy_description, client\n" +
                 "FROM public.buy\n" +
                 "WHERE buy_id = :id";
         SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
         return template.queryForObject(sql, parameterSource, new BuyRowMapper());
     }
 
-    public int setBuy(String description, String client) {
+    public long setBuy(String description, String client) {
         String sql = "INSERT INTO public.buy\n" +
-                "(buy_description, client) VALUES (:description, :client)";
+                "(buy_description, client) VALUES (:description, :client) RETURNING ID";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("description", description)
                 .addValue("client", client);
-        return template.queryForObject(sql, parameterSource, Integer.class);
+        return template.queryForObject(sql, parameterSource, Long.class);
     }
 
     public void updateBuy(long id, String description, String client) {

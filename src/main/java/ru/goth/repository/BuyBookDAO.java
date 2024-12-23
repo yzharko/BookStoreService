@@ -11,9 +11,13 @@ import ru.goth.repository.rowmapper.BuyBookRowMapper;
 public class BuyBookDAO {
 
     private final NamedParameterJdbcTemplate template;
+    private BookDAO bookDAO;
+    private BuyDAO buyDAO;
 
-    public BuyBookDAO(NamedParameterJdbcTemplate template) {
+    public BuyBookDAO(NamedParameterJdbcTemplate template, BookDAO bookDAO, BuyDAO buyDAO) {
         this.template = template;
+        this.buyDAO = buyDAO;
+        this.bookDAO = bookDAO;
     }
 
     public BuyBook getBuyBook(long id) {
@@ -21,18 +25,23 @@ public class BuyBookDAO {
                 "FROM public.buy_book\n" +
                 "WHERE buy_book_id = :id";
         SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
-        return template.queryForObject(sql, parameterSource, new BuyBookRowMapper());
+        BuyBook buyBook = template.queryForObject(sql, parameterSource, new BuyBookRowMapper());
+
+        buyBook.setBook(bookDAO.getBook(buyBook.getBook().getId()));
+        buyBook.setBuy(buyDAO.getBuy(buyBook.getBuy().getId()));
+
+        return buyBook;
     }
 
-    public void setBuyBook(long buyId, int bookId, int amount) {
+    public long setBuyBook(long buyId, long bookId, int amount) {
         String sql = "INSERT INTO public.buy_book\n" +
                 "(buy_id, book_id, amount)\n" +
-                "VALUES (:buyId, :bookId, :amount)";
+                "VALUES (:buyId, :bookId, :amount) RETURNING ID";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("buyId", buyId)
                 .addValue("bookId", bookId)
                 .addValue("amount", amount);
-        template.update(sql, parameterSource);
+        return template.queryForObject(sql, parameterSource, Long.class);
     }
 
     public void updateBuyBook(long buyBookId, long buyId, long bookId, int amount) {
