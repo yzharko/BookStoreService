@@ -1,19 +1,16 @@
 package ru.goth.service;
 
+import org.springframework.stereotype.Service;
 import ru.goth.entity.Buy;
 import ru.goth.entity.dto.BuyDTO;
 import ru.goth.repository.BuyDAO;
 
-import java.sql.SQLException;
 import java.util.logging.Logger;
 
+@Service
 public class BuyService {
     private static final Logger logger = Logger.getLogger(BuyService.class.getName());
     private BuyDAO buyDAO;
-
-    BuyService() throws SQLException {
-        this.buyDAO = new BuyDAO();
-    }
 
     BuyService(BuyDAO buyDAO) {
         this.buyDAO = buyDAO;
@@ -29,7 +26,7 @@ public class BuyService {
         return buyDTO;
     }
 
-    public int setByDTO(BuyDTO buyDTO) {
+    public long setByDTO(BuyDTO buyDTO) {
         return buyDAO.setBuy(buyDTO.getDescription(), buyDTO.getClient());
     }
 
