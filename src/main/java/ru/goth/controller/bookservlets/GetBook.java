@@ -34,8 +34,8 @@ public class GetBook extends HttpServlet {
 
             BookDTO bookDTO = bookService.getById(id);
 
-            JsonConvertor<BookDTO> jsonConvertor = new JsonConvertor<>();
-            jsonConvertor.convertToJson(response, bookDTO);
+            JsonConvertor<BookDTO> jsonConvertor = new JsonConvertor<>(response);
+            jsonConvertor.convertToJson(bookDTO);
         } catch (Exception e) {
             logger.info(e.getMessage());
         }

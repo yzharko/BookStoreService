@@ -33,8 +33,8 @@ public class GetAuthor extends HttpServlet {
 
             AuthorDTO authorDTO = authorService.getById(id);
 
-            JsonConvertor <AuthorDTO> jsonConvertor = new JsonConvertor<>();
-            jsonConvertor.convertToJson(response, authorDTO);
+            JsonConvertor <AuthorDTO> jsonConvertor = new JsonConvertor<>(response);
+            jsonConvertor.convertToJson(authorDTO);
         } catch (Exception e) {
             logger.info(e.getMessage());
         }

@@ -33,8 +33,8 @@ public class GetBuyBook extends HttpServlet {
 
             BuyBookDTO buyBookDTO = buyBookService.getById(id);
 
-            JsonConvertor<BuyBookDTO> jsonConvertor = new JsonConvertor<>();
-            jsonConvertor.convertToJson(response, buyBookDTO);
+            JsonConvertor<BuyBookDTO> jsonConvertor = new JsonConvertor<>(response);
+            jsonConvertor.convertToJson(buyBookDTO);
         } catch (Exception e) {
             logger.info(e.getMessage());
         }

@@ -3,6 +3,7 @@ package ru.goth.controller;
 import org.junit.Before;
 import org.junit.Test;
 import ru.goth.controller.authorservlets.GetAuthor;
+import ru.goth.entity.dto.AuthorDTO;
 import ru.goth.service.AuthorService;
 
 import javax.servlet.RequestDispatcher;
@@ -23,6 +24,8 @@ public class GetAuthorTest {
     private HttpServletResponse response;
     private RequestDispatcher requestDispatcher;
     private GetAuthor getAuthor;
+    private JsonConvertor <AuthorDTO> jsonConvertor;
+    private final AuthorDTO mockAuthorDTO = new AuthorDTO();
 
     @Before
     public void setup() {
@@ -31,19 +34,22 @@ public class GetAuthorTest {
         response = mock(HttpServletResponse.class);
         requestDispatcher = mock(RequestDispatcher.class);
         getAuthor = new GetAuthor(mockAuthorService);
+
+        jsonConvertor = (JsonConvertor<AuthorDTO>) mock(JsonConvertor.class);
     }
 
     @Test
     public void testDoGet() throws ServletException, IOException {
         final long authorId = 1L;
         when(request.getParameter("id")).thenReturn(String.valueOf(authorId));
-
-        final String jsp = "/WEB-INF/jsp/authorGetRes.jsp";
-        when(request.getRequestDispatcher(jsp)).thenReturn(requestDispatcher);
+        mockAuthorDTO.setName(String.valueOf(authorId));
+//        final String jsp = "/WEB-INF/jsp/authorGetRes.jsp";
+//        when(request.getRequestDispatcher(jsp)).thenReturn(requestDispatcher);
 
         getAuthor.doGet(request, response);
 
         verify(mockAuthorService).getById(any(long.class));
-        verify(requestDispatcher).forward(request, response);
+        verify(jsonConvertor, times(1)).convertToJson(any(AuthorDTO.class));
+        //verify(requestDispatcher).forward(request, response);
     }
 }
