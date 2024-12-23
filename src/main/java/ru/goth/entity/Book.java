@@ -1,12 +1,28 @@
 package ru.goth.entity;
 
+import jakarta.persistence.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "book")
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "title")
     private String title;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "OWNER_ID")
     private Author author;
+    @Column(name = "genre")
     private String genre;
+    @Column(name = "price")
     private float price;
+    @Column(name = "amount")
     private int amount;
+    @OneToMany(mappedBy = "book_id", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<BuyBook> buyBooks;
 
     public long getId() {
         return id;

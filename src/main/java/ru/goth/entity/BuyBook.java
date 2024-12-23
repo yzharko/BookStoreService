@@ -1,9 +1,19 @@
 package ru.goth.entity;
 
+import jakarta.persistence.*;
+
+@Entity
 public class BuyBook {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @ManyToOne
+    @JoinColumn(name = "buy_id")
     private Buy buy;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
     private Book book;
+    @Column(name = "amount")
     private int amount;
 
     public long getId() {

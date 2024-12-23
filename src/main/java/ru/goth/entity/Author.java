@@ -1,8 +1,19 @@
 package ru.goth.entity;
 
+import jakarta.persistence.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "author")
 public class Author {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "name_author")
     private String name;
+    @OneToMany(mappedBy = "author_id", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Book> books;
 
     public Author() {}
     public Author(String name) {
