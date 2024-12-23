@@ -12,9 +12,16 @@ public class BuyBookRowMapper implements RowMapper<BuyBook> {
     @Override
     public BuyBook mapRow(ResultSet rs, int rowNum) throws SQLException {
         BuyBook buyBook = new BuyBook();
-        buyBook.setId(rs.getInt("id"));
-        buyBook.setBuy(rs.getObject("buy", Buy.class));
-        buyBook.setBook(rs.getObject("book", Book.class));
+        buyBook.setId(rs.getLong("buy_book_id"));
+
+        Buy buy = new Buy();
+        buy.setId(rs.getLong("buy_id"));
+        buyBook.setBuy(buy);
+
+        Book book = new Book();
+        book.setId(rs.getLong("book_id"));
+        buyBook.setBook(book);
+
         buyBook.setAmount(rs.getInt("amount"));
         return buyBook;
     }
