@@ -1,20 +1,17 @@
 package ru.goth.service;
 
+import org.springframework.stereotype.Service;
 import ru.goth.entity.Author;
 import ru.goth.entity.Book;
 import ru.goth.entity.dto.BookDTO;
 import ru.goth.repository.BookDAO;
 
-import java.sql.SQLException;
 import java.util.logging.Logger;
 
+@Service
 public class BookService {
     private static final Logger logger = Logger.getLogger(BookService.class.getName());
     private BookDAO bookDAO;
-
-    public BookService() throws SQLException {
-        this.bookDAO = new BookDAO();
-    }
 
     public BookService(BookDAO bookDAO) {
         this.bookDAO = bookDAO;
@@ -33,7 +30,7 @@ public class BookService {
         return bookDTO;
     }
 
-    public int setByDTO(BookDTO bookDTO) {
+    public long setByDTO(BookDTO bookDTO) {
         String title = bookDTO.getTitle();
         Author author = bookDTO.getAuthor();
         String genre = bookDTO.getGenre();
