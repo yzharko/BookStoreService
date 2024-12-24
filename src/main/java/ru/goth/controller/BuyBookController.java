@@ -19,8 +19,8 @@ public class BuyBookController {
     }
 
     @PostMapping
-    public void createBuyBook(@RequestBody BuyBookDTO buyBookDTO) {
-        buyBookService.setByDTO(buyBookDTO);
+    public long createBuyBook(@RequestBody BuyBookDTO buyBookDTO) {
+        return buyBookService.setByDTO(buyBookDTO);
     }
 
     @PutMapping
@@ -29,7 +29,7 @@ public class BuyBookController {
     }
 
     @DeleteMapping
-    public void deleteAuthor(@RequestParam long id) {
+    public void deleteBuyBook(@RequestParam long id) {
         buyBookService.deleteById(id);
     }
 }

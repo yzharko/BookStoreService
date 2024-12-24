@@ -19,8 +19,8 @@ public class AuthorController {
     }
 
     @PostMapping
-    public void createAuthor(@RequestBody AuthorDTO authorDTO) {
-        authorService.setByDTO(authorDTO);
+    public long createAuthor(@RequestBody AuthorDTO authorDTO) {
+        return authorService.setByDTO(authorDTO);
     }
 
     @PutMapping
@@ -29,7 +29,7 @@ public class AuthorController {
     }
 
     @DeleteMapping
-    public void deleteAuthor(@RequestBody AuthorDTO authorDTO) {
-        authorService.deleteByDTO(authorDTO);
+    public void deleteAuthor(@RequestParam long id) {
+        authorService.deleteById(id);
     }
 }

@@ -14,13 +14,13 @@ public class BookController {
     }
 
     @GetMapping
-    public void getBook(@RequestParam long id) {
-        bookService.getById(id);
+    public BookDTO getBook(@RequestParam long id) {
+        return bookService.getById(id);
     }
 
     @PostMapping
-    public void createBook(@RequestBody BookDTO bookDTO) {
-        bookService.setByDTO(bookDTO);
+    public long createBook(@RequestBody BookDTO bookDTO) {
+        return bookService.setByDTO(bookDTO);
     }
 
     @PutMapping
@@ -29,7 +29,7 @@ public class BookController {
     }
 
     @DeleteMapping
-    public void deleteBook(@RequestBody BookDTO bookDTO) {
-        bookService.deleteByDTO(bookDTO);
+    public void deleteBook(@RequestParam long id) {
+        bookService.deleteById(id);
     }
 }
