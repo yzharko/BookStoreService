@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.goth.entity.Author;
 import ru.goth.repository.rowmapper.AuthorRowMapper;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public class AuthorDAO {
@@ -22,15 +22,16 @@ public class AuthorDAO {
                 "FROM public.author\n" +
                 "WHERE author_id = :id";
         SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
-        return template.queryForObject(sql, parameterSource, new AuthorRowMapper());
+        List<Author> results = template.query(sql, parameterSource, new AuthorRowMapper());
+        return results.isEmpty() ? null : results.get(0);
     }
 
-    public Optional<Long> setAuthor(String name) {
+    public Long setAuthor(String name) {
         String sql = "INSERT INTO public.author \n" +
                 "(name_author) VALUES (:name) RETURNING author_id";
 
         SqlParameterSource parameterSource = new MapSqlParameterSource("name", name);
-        return Optional.ofNullable(template.queryForObject(sql, parameterSource, Long.class));
+        return template.queryForObject(sql, parameterSource, Long.class);
     }
 
     public void updateAuthor(long id, String name) {

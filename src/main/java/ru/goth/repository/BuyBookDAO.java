@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.goth.entity.BuyBook;
 import ru.goth.repository.rowmapper.BuyBookRowMapper;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public class BuyBookDAO {
@@ -27,15 +27,19 @@ public class BuyBookDAO {
                 "FROM public.buy_book\n" +
                 "WHERE buy_book_id = :id";
         SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
-        BuyBook buyBook = template.queryForObject(sql, parameterSource, new BuyBookRowMapper());
+        List<BuyBook> buyBookList = template.query(sql, parameterSource, new BuyBookRowMapper());
 
-        buyBook.setBook(bookDAO.getBook(buyBook.getBook().getId()));
-        buyBook.setBuy(buyDAO.getBuy(buyBook.getBuy().getId()));
-
-        return buyBook;
+        if (buyBookList.isEmpty()) {
+            return null;
+        } else {
+            BuyBook buyBook = buyBookList.get(0);
+            buyBook.setBook(bookDAO.getBook(buyBook.getBook().getId()));
+            buyBook.setBuy(buyDAO.getBuy(buyBook.getBuy().getId()));
+            return buyBook;
+        }
     }
 
-    public Optional<Long> setBuyBook(long buyId, long bookId, int amount) {
+    public Long setBuyBook(long buyId, long bookId, int amount) {
         String sql = "INSERT INTO public.buy_book\n" +
                 "(buy_id, book_id, amount)\n" +
                 "VALUES (:buyId, :bookId, :amount) RETURNING buy_book_id";
@@ -43,7 +47,7 @@ public class BuyBookDAO {
                 .addValue("buyId", buyId)
                 .addValue("bookId", bookId)
                 .addValue("amount", amount);
-        return Optional.ofNullable(template.queryForObject(sql, parameterSource, Long.class));
+        return template.queryForObject(sql, parameterSource, Long.class);
     }
 
     public void updateBuyBook(long buyBookId, long buyId, long bookId, int amount) {

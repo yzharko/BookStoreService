@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.goth.entity.Buy;
 import ru.goth.repository.rowmapper.BuyRowMapper;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public class BuyDAO {
@@ -22,16 +22,17 @@ public class BuyDAO {
                 "FROM public.buy\n" +
                 "WHERE buy_id = :id";
         SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
-        return template.queryForObject(sql, parameterSource, new BuyRowMapper());
+        List<Buy> results = template.query(sql, parameterSource, new BuyRowMapper());
+        return results.isEmpty() ? null : results.get(0);
     }
 
-    public Optional<Long> setBuy(String description, String client) {
+    public Long setBuy(String description, String client) {
         String sql = "INSERT INTO public.buy\n" +
                 "(buy_description, client) VALUES (:description, :client) RETURNING buy_id";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("description", description)
                 .addValue("client", client);
-        return Optional.ofNullable(template.queryForObject(sql, parameterSource, Long.class));
+        return template.queryForObject(sql, parameterSource, Long.class);
     }
 
     public void updateBuy(long id, String description, String client) {

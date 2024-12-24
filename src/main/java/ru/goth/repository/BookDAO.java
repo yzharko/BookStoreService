@@ -8,7 +8,7 @@ import ru.goth.entity.Author;
 import ru.goth.entity.Book;
 import ru.goth.repository.rowmapper.BookRowMapper;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public class BookDAO {
@@ -26,13 +26,18 @@ public class BookDAO {
                 "FROM public.book\n" +
                 "WHERE book_id = :id";
         SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
-        Book book = template.queryForObject(sql, parameterSource, new BookRowMapper());
+        List<Book> bookList = template.query(sql, parameterSource, new BookRowMapper());
 
-        book.setAuthor(authorDAO.getAuthor(book.getAuthor().getId()));
-        return book;
+        if (bookList.isEmpty()) {
+            return null;
+        } else {
+            Book book = bookList.get(0);
+            book.setAuthor(authorDAO.getAuthor(book.getAuthor().getId()));
+            return book;
+        }
     }
 
-    public Optional<Long> setBook(String title, Author author, String genre, float price, int amount) {
+    public Long setBook(String title, Author author, String genre, float price, int amount) {
         String sql = "INSERT INTO public.book\n" +
                 "(title, author_id, genre, price, amount)\n" +
                 "VALUES (:title, :authorId, :genre, :price, :amount) RETURNING book_id";
@@ -42,7 +47,7 @@ public class BookDAO {
                 .addValue("genre", genre)
                 .addValue("price", price)
                 .addValue("amount", amount);
-        return Optional.ofNullable(template.queryForObject(sql, parameterSource, Long.class));
+        return template.queryForObject(sql, parameterSource, Long.class);
     }
 
     public void updateBook(long id, String title, Author author, String genre, float price, int amount) {
