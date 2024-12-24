@@ -9,26 +9,26 @@
     <h2>Работа с Авторами</h2>
     <h3>Выберите метод</h3>
     <ul>
-        <li><a href="authorGet.jsp">GET</a></li>
-        <li><a href="authorPost.jsp">POST</a></li>
-        <li><a href="authorPut.jsp">PUT</a></li>
-        <li><a href="authorDelete.jsp">DELETE</a></li>
+        <li><a href="">GET</a></li>
+        <li><a href="">POST</a></li>
+        <li><a href="">PUT</a></li>
+        <li><a href="">DELETE</a></li>
     </ul>
      <h2>Работа с Книгами</h2>
      <h3>Выберите метод</h3>
      <ul>
-        <li><a href="bookGet.jsp">GET</a></li>
-        <li><a href="bookPost.jsp">POST</a></li>
-        <li><a href="bookPut.jsp">PUT</a></li>
-        <li><a href="bookDelete.jsp">DELETE</a></li>
+        <li><a href="">GET</a></li>
+        <li><a href="">POST</a></li>
+        <li><a href="">PUT</a></li>
+        <li><a href="">DELETE</a></li>
      </ul>
      <h2>Работа с Заказами</h2>
      <h3>Выберите метод</h3>
      <ul>
-        <li><a href="buyBookGet.jsp">GET</a></li>
-        <li><a href="buyBookPost.jsp">POST</a></li>
-        <li><a href="buyBookPut.jsp">PUT</a></li>
-        <li><a href="buyBookDelete.jsp">DELETE</a></li>
+        <li><a href="">GET</a></li>
+        <li><a href="">POST</a></li>
+        <li><a href="">PUT</a></li>
+        <li><a href="">DELETE</a></li>
      </ul>
 </body>
 </html>
