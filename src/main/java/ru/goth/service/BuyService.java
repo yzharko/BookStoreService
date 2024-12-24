@@ -5,6 +5,7 @@ import ru.goth.entity.Buy;
 import ru.goth.entity.dto.BuyDTO;
 import ru.goth.repository.BuyDAO;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -27,7 +28,8 @@ public class BuyService {
     }
 
     public long setByDTO(BuyDTO buyDTO) {
-        return buyDAO.setBuy(buyDTO.getDescription(), buyDTO.getClient());
+        Optional<Long> result = buyDAO.setBuy(buyDTO.getDescription(), buyDTO.getClient());
+        return result.isPresent() ? result.get() : 0;
     }
 
     public void update(long id, BuyDTO buyDTO) {
@@ -40,4 +42,8 @@ public class BuyService {
             buyDAO.updateBuy(id, description, client);
         }
     }
+    public void deleteById(long id) {
+        buyDAO.deleteBuy(id);
+    }
+
 }
