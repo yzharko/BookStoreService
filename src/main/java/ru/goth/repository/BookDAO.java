@@ -8,6 +8,8 @@ import ru.goth.entity.Author;
 import ru.goth.entity.Book;
 import ru.goth.repository.rowmapper.BookRowMapper;
 
+import java.util.Optional;
+
 @Repository
 public class BookDAO {
 
@@ -30,17 +32,17 @@ public class BookDAO {
         return book;
     }
 
-    public long setBook(String title, Author author, String genre, float price, int amount) {
+    public Optional<Long> setBook(String title, Author author, String genre, float price, int amount) {
         String sql = "INSERT INTO public.book\n" +
                 "(title, author_id, genre, price, amount)\n" +
-                "VALUES (:title, :authorId, :genre, :price, :amount) RETURNING ID";
+                "VALUES (:title, :authorId, :genre, :price, :amount) RETURNING book_id";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("title", title)
                 .addValue("authorId", author.getId())
                 .addValue("genre", genre)
                 .addValue("price", price)
                 .addValue("amount", amount);
-        return template.queryForObject(sql, parameterSource, Long.class);
+        return Optional.ofNullable(template.queryForObject(sql, parameterSource, Long.class));
     }
 
     public void updateBook(long id, String title, Author author, String genre, float price, int amount) {
@@ -52,14 +54,15 @@ public class BookDAO {
                 .addValue("authorId", author.getId())
                 .addValue("genre", genre)
                 .addValue("price", price)
-                .addValue("amount", amount);
+                .addValue("amount", amount)
+                .addValue("id", id);
         template.update(sql, parameterSource);
     }
 
-    public void deleteBook(String title) {
+    public void deleteBook(long id) {
         String sql = "DELETE FROM public.book \n" +
-                "WHERE title = :title";
-        SqlParameterSource parameterSource = new MapSqlParameterSource("title", title);
+                "WHERE book_id = :id";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
         template.update(sql, parameterSource);
     }
 }

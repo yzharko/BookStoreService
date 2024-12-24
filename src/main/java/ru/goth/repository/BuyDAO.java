@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import ru.goth.entity.Buy;
 import ru.goth.repository.rowmapper.BuyRowMapper;
 
+import java.util.Optional;
+
 @Repository
 public class BuyDAO {
     private final NamedParameterJdbcTemplate template;
@@ -23,13 +25,13 @@ public class BuyDAO {
         return template.queryForObject(sql, parameterSource, new BuyRowMapper());
     }
 
-    public long setBuy(String description, String client) {
+    public Optional<Long> setBuy(String description, String client) {
         String sql = "INSERT INTO public.buy\n" +
-                "(buy_description, client) VALUES (:description, :client) RETURNING ID";
+                "(buy_description, client) VALUES (:description, :client) RETURNING buy_id";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("description", description)
                 .addValue("client", client);
-        return template.queryForObject(sql, parameterSource, Long.class);
+        return Optional.ofNullable(template.queryForObject(sql, parameterSource, Long.class));
     }
 
     public void updateBuy(long id, String description, String client) {
@@ -38,7 +40,15 @@ public class BuyDAO {
                 "WHERE buy_id = ?";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("description", description)
-                .addValue("client", client);
+                .addValue("client", client)
+                .addValue("id", id);
+        template.update(sql, parameterSource);
+    }
+
+    public void deleteBuy(long id) {
+        String sql = "DELETE FROM public.buy \n" +
+                "WHERE buy_id = :id";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
         template.update(sql, parameterSource);
     }
 }
