@@ -6,7 +6,6 @@ import ru.goth.entity.Book;
 import ru.goth.entity.dto.BookDTO;
 import ru.goth.repository.BookDAO;
 
-import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -22,12 +21,13 @@ public class BookService {
         Book book = bookDAO.getBook(id);
 
         BookDTO bookDTO = new BookDTO();
-        bookDTO.setTitle(book.getTitle());
-        bookDTO.setAuthor(book.getAuthor());
-        bookDTO.setGenre(book.getGenre());
-        bookDTO.setPrice(book.getPrice());
-        bookDTO.setAmount(book.getAmount());
-
+        if (book != null) {
+            bookDTO.setTitle(book.getTitle());
+            bookDTO.setAuthor(book.getAuthor());
+            bookDTO.setGenre(book.getGenre());
+            bookDTO.setPrice(book.getPrice());
+            bookDTO.setAmount(book.getAmount());
+        }
         return bookDTO;
     }
 
@@ -38,8 +38,7 @@ public class BookService {
         float price = bookDTO.getPrice();
         int amount = bookDTO.getAmount();
 
-        Optional<Long> result = bookDAO.setBook(title, author, genre, price, amount);
-        return result.isPresent() ? result.get() : 0;
+        return bookDAO.setBook(title, author, genre, price, amount);
     }
 
     public void update(long id, BookDTO bookDTO) {

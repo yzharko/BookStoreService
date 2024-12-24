@@ -5,7 +5,6 @@ import ru.goth.entity.BuyBook;
 import ru.goth.entity.dto.BuyBookDTO;
 import ru.goth.repository.BuyBookDAO;
 
-import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -21,16 +20,16 @@ public class BuyBookService {
         BuyBook buyBook = buyBookDAO.getBuyBook(id);
 
         BuyBookDTO buyBookDTO = new BuyBookDTO();
-        buyBookDTO.setBuy(buyBook.getBuy());
-        buyBookDTO.setBook(buyBook.getBook());
-        buyBookDTO.setAmount(buyBook.getAmount());
-
+        if (buyBook != null) {
+            buyBookDTO.setBuy(buyBook.getBuy());
+            buyBookDTO.setBook(buyBook.getBook());
+            buyBookDTO.setAmount(buyBook.getAmount());
+        }
         return buyBookDTO;
     }
 
     public long setByDTO(BuyBookDTO buyBookDTO) {
-        Optional<Long> result = buyBookDAO.setBuyBook(buyBookDTO.getBuy().getId(), buyBookDTO.getBook().getId(), buyBookDTO.getAmount());
-        return result.isPresent() ? result.get() : 0;
+        return buyBookDAO.setBuyBook(buyBookDTO.getBuy().getId(), buyBookDTO.getBook().getId(), buyBookDTO.getAmount());
     }
 
     public void update(long buyBookId, BuyBookDTO buyBookDTO) {

@@ -5,7 +5,6 @@ import ru.goth.entity.Author;
 import ru.goth.entity.dto.AuthorDTO;
 import ru.goth.repository.AuthorDAO;
 
-import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -21,14 +20,14 @@ public class AuthorService {
         Author author = authorDAO.getAuthor(id);
 
         AuthorDTO authorDTO = new AuthorDTO();
-        authorDTO.setName(author.getName());
-
+        if (author != null) {
+            authorDTO.setName(author.getName());
+        }
         return authorDTO;
     }
 
     public long setByDTO(AuthorDTO authorDTO) {
-        Optional<Long> result = authorDAO.setAuthor(authorDTO.getName());
-        return result.isPresent() ? result.get() : 0;
+        return authorDAO.setAuthor(authorDTO.getName());
     }
 
     public void update(long id, AuthorDTO authorDTO) {
